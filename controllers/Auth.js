@@ -2,17 +2,6 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 
-// Get semua product
-export const getUsers = async (req, res) => {
-    try {
-        const users = await Users.findAll();
-        res.send(users);
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-
 export const loginUser = async (req, res) => {
     try {
         if(!req.body.email || !req.body.password) {

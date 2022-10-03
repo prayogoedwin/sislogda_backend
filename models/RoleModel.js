@@ -7,18 +7,9 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
  
 // Define schema
-const Users = db.define('sis_users', {
+const Roles = db.define('sis_roles', {
   // Define attributes
-  email: {
-    type: DataTypes.STRING
-  },
-  role_id: {
-    type: DataTypes.DOUBLE
-  },
-  password: {
-    type: DataTypes.STRING
-  },
-  token: {
+  name: {
     type: DataTypes.STRING
   },
   createdAt: {
@@ -27,20 +18,21 @@ const Users = db.define('sis_users', {
     name: 'createdAt',
     field: 'createdat'
     },
-  updatedAt: {
+    updatedAt: {
         type: DataTypes.DATE,
         name: 'updatedAt',
         field: 'updatedat'
     },
-  deletedAt: {
-      type: DataTypes.DATE,
-      name: 'deletedAt',
-      field: 'deletedat'
-  }
+    deletedAt: {
+        type: DataTypes.DATE,
+        name: 'deletedAt',
+        field: 'deletedat'
+    }
+  
 },{
   // Freeze Table Name
   freezeTableName: true
 });
  
 // Export model Product
-export default Users;
+export default Roles;
