@@ -28,6 +28,9 @@ const Users = db.define('sis_users', {
   kabkota_id: {
     type: DataTypes.INTEGER
   },
+  is_active: {
+    type: DataTypes.INTEGER
+  },
   password: {
     type: DataTypes.STRING
   },

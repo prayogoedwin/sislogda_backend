@@ -28,9 +28,10 @@ const router = express.Router();
 
 router.post('/api/login', loginUser);
 
+//users crud
 router.get('/api/roles', getRoles);
-router.get('/api/users/all', getUsers);
-router.get('/api/users', getUsersAll);
+router.get('/api/users/all', getUsersAll);
+router.get('/api/users', getUsers);
 router.post('/api/user/detail', getUsersDetail);
 router.post('/api/user/delete', UserDelete);
 router.post('/api/user/add', UserCreate);

@@ -1,5 +1,6 @@
 // Import model Product
 import Users from "../models/UserModel.js";
+import Roles from "../models/RoleModel.js";
 import {Op} from "sequelize";
 import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
@@ -8,12 +9,21 @@ dotenv.config();
 
 
 export const getUsers = async(req, res) =>{
+    Users.belongsTo(Roles, {as: 'user_role', targetKey:'id',foreignKey: 'role_id'});
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
     const totalRows = await Users.count({
+        include: [{
+            model: Roles, as: "user_role",
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        }],
+        where: {
+            deletedat: null
+        },
         where:{
+
             [Op.or]: [{nama_lengkap:{
                 [Op.like]: '%'+search+'%'
             }}, {email:{
@@ -23,6 +33,13 @@ export const getUsers = async(req, res) =>{
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Users.findAll({
+        include: [{
+            model: Roles, as: "user_role",
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        }],
+        where: {
+            deletedat: null
+        },
         where:{
             [Op.or]: [{nama_lengkap:{
                 [Op.like]: '%'+search+'%'
@@ -30,6 +47,8 @@ export const getUsers = async(req, res) =>{
                 [Op.like]: '%'+search+'%'
             }}]
         },
+        
+        attributes: { exclude: ['updatedAt', 'deletedAt','role_id', 'password'] },
         offset: offset,
         limit: limit,
         order:[
@@ -71,10 +90,19 @@ export const getUsers = async(req, res) =>{
 // Get semua users
 export const getUsersAll = async (req, res) => {
     try {
+        Users.belongsTo(Roles, {as: 'user_role', targetKey:'id',foreignKey: 'role_id'});
         const users = await Users.findAll({
+           
+            include: [{
+                model: Roles, as: "user_role",
+
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            }],
             where: {
                 deletedat: null
-            }
+            },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt','role_id'] }
+
         });
 
         if(users.length > 0){
@@ -103,7 +131,8 @@ export const getUsersAll = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': err
         });
     }
 }
@@ -150,6 +179,7 @@ export const UserCreate = async (req, res) => {
 				password: hashedpass,
                 role_id: req.body.role_id,
                 kabkota_id : req.body.kabkota_id,
+                is_active : 1,
                 createdAt: datetime,
                 updatedAt: datetime
                 // created_by: req.body.created_by
