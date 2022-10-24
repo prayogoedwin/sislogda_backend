@@ -27,7 +27,7 @@ export const getUsers = async (req, res) => {
             res.json({
                 'status' : 1,
                 'message': 'Data Kosong',
-                'data' : array(),
+                'data' : Array()
             });
 
         }
@@ -37,7 +37,7 @@ export const getUsers = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': console.log(err)
+            'message': 'Error'
         });
     }
 }
@@ -66,7 +66,39 @@ export const getUsersDetail = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': console.log(err)
+            'message': 'Error'
+        });
+    }
+}
+
+// Add users
+export const UserAdd = async (req, res) => {
+    var datetime = new Date();
+    try {
+        const users = await Users.create(
+            {
+                email: email
+            },{
+            where:{
+                id: req.body.user_id
+            }
+        });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil ditambahkan',
+            // 'data': user[0]['name'],
+            'data' : "",
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': err
         });
     }
 }
@@ -95,7 +127,7 @@ export const UserDelete = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': console.log(err)
+            'message': 'Error'
         });
     }
 }

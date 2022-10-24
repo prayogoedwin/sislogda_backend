@@ -12,6 +12,7 @@ import {
  import { 
     getUsers,
     getUsersDetail,
+    UserAdd,
     UserDelete
  } from "../controllers/User.js";
 
@@ -30,6 +31,7 @@ router.get('/api/roles', getRoles);
 router.get('/api/users', getUsers);
 router.post('/api/user/detail', getUsersDetail);
 router.post('/api/user/delete', UserDelete);
+router.post('/api/user/add', UserAdd);
 
 
 router.get('/api/kabkotas', getKabkotas);
