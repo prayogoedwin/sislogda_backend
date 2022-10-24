@@ -1,6 +1,7 @@
 // Import model Product
 import Users from "../models/UserModel.js";
 import Roles from "../models/RoleModel.js";
+import Kabkotas from "../models/KabkotaModel.js";
 import {Op} from "sequelize";
 import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
@@ -9,6 +10,11 @@ dotenv.config();
 
 
 export const getUsers = async(req, res) =>{
+    Users.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id'
+     });
+
     Users.belongsTo(Roles, {
         targetKey:'id',
         foreignKey: 'role_id'
@@ -31,10 +37,17 @@ export const getUsers = async(req, res) =>{
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Users.findAll({
-        include: [{
+        include: [
+        {
             model: Roles,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        }],
+        },
+        {
+            model: Kabkotas,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        }
+        ],
+
         where: {
             deletedAt: null
         },
@@ -88,18 +101,23 @@ export const getUsers = async(req, res) =>{
 // Get semua users
 export const getUsersAll = async (req, res) => {
     try {
-        Users.belongsTo(Roles, {as: 'user_role', targetKey:'id',foreignKey: 'role_id'});
+        Users.belongsTo(Roles, {targetKey:'id',foreignKey: 'role_id'});
+        Users.belongsTo(Kabkotas, { targetKey:'id', foreignKey: 'kabkota_id'});
         const users = await Users.findAll({
-           
-            include: [{
-                model: Roles, as: "user_role",
-
-                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            }],
+            include: [
+                {
+                    model: Roles,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                },
+                {
+                    model: Kabkotas,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                }
+                ],
             where: {
                 deletedat: null
             },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt','role_id'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt','role_id', 'password'] }
 
         });
 
