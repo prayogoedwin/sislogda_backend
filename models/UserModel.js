@@ -25,6 +25,9 @@ const Users = db.define('sis_users', {
   role_id: {
     type: DataTypes.DOUBLE
   },
+  kabkota_id: {
+    type: DataTypes.INTEGER
+  },
   password: {
     type: DataTypes.STRING
   },
