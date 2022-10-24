@@ -11,6 +11,7 @@ import {
 
  import { 
     getUsers,
+    getUsersAll,
     getUsersDetail,
     UserCreate,
     UserDelete
@@ -28,7 +29,8 @@ const router = express.Router();
 router.post('/api/login', loginUser);
 
 router.get('/api/roles', getRoles);
-router.get('/api/users', getUsers);
+router.get('/api/users/all', getUsers);
+router.get('/api/users', getUsersAll);
 router.post('/api/user/detail', getUsersDetail);
 router.post('/api/user/delete', UserDelete);
 router.post('/api/user/add', UserCreate);
