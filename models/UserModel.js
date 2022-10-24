@@ -12,9 +12,14 @@ const Users = db.define('sis_users', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    autoIncrement: true,
+    unique: true,
     primaryKey: true
   },
   email: {
+    type: DataTypes.STRING
+  },
+  nama_lengkap: {
     type: DataTypes.STRING
   },
   role_id: {
