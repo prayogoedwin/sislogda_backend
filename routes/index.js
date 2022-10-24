@@ -10,7 +10,9 @@ import {
  } from "../controllers/Role.js";
 
  import { 
-    getUsers
+    getUsers,
+    getUsersDetail,
+    UserDelete
  } from "../controllers/User.js";
 
  import {getKabkotas} from "../controllers/Kabkota.js"
@@ -23,8 +25,11 @@ const router = express.Router();
 // router.get('/users', getUsers);
 
 router.post('/api/login', loginUser);
+
 router.get('/api/roles', getRoles);
 router.get('/api/users', getUsers);
+router.post('/api/user/detail', getUsersDetail);
+router.post('/api/user/delete', UserDelete);
 
 
 router.get('/api/kabkotas', getKabkotas);

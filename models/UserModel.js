@@ -9,6 +9,11 @@ const { DataTypes } = Sequelize;
 // Define schema
 const Users = db.define('sis_users', {
   // Define attributes
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
   email: {
     type: DataTypes.STRING
   },
