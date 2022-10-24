@@ -9,21 +9,19 @@ dotenv.config();
 
 
 export const getUsers = async(req, res) =>{
-    Users.belongsTo(Roles, {as: 'user_role', targetKey:'id',foreignKey: 'role_id'});
+    Users.belongsTo(Roles, {
+        targetKey:'id',
+        foreignKey: 'role_id'
+     });
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
     const totalRows = await Users.count({
-        include: [{
-            model: Roles, as: "user_role",
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        }],
         where: {
-            deletedat: null
+            deletedAt: null
         },
         where:{
-
             [Op.or]: [{nama_lengkap:{
                 [Op.like]: '%'+search+'%'
             }}, {email:{
@@ -34,11 +32,11 @@ export const getUsers = async(req, res) =>{
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Users.findAll({
         include: [{
-            model: Roles, as: "user_role",
+            model: Roles,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         }],
         where: {
-            deletedat: null
+            deletedAt: null
         },
         where:{
             [Op.or]: [{nama_lengkap:{
