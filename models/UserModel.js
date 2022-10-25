@@ -17,7 +17,21 @@ const Users = db.define('sis_users', {
     primaryKey: true
   },
   email: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    validate: {
+      isUnique: (value, next) => {
+        Users.findAll({
+          where: { email: value },
+          attributes: ['id'],
+        })
+          .then((user) => {
+            if (user.length != 0)
+              next(new Error('Email address already in use!'));
+            next();
+          })
+          .catch((onError) => console.log(onError));
+      },
+    },
   },
   nama_lengkap: {
     type: DataTypes.STRING

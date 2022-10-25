@@ -128,7 +128,8 @@ export const getPenyuluhAll = async (req, res) => {
         res.json({
             'status' : 0,
             // 'message': err['errors'][0]['message']
-            'message': err
+            // 'message': err
+            'message': 'Error'
         });
     }
 }
@@ -157,7 +158,8 @@ export const getPenyuluhDetail = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
         });
     }
 }
@@ -200,7 +202,8 @@ export const PenyuluhCreate = async (req, res) => {
         res.json({
             'status' : 0,
             // 'message': err,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
         });
     }
 }
@@ -229,7 +232,8 @@ export const PenyuluhDelete = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
         });
     }
 }

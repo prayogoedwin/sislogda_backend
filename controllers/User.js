@@ -113,7 +113,11 @@ export const getUsersAll = async (req, res) => {
             where: {
                 deletedat: null
             },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt', 'password'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt', 'password'] },
+            order:[
+                ['id', 'ASC']
+            ]
+            
 
         });
 
@@ -247,7 +251,7 @@ export const UserUpdate = async (req, res) => {
             'status' : 1,
             'message': 'Data berhasil di edit',
             // 'data': user[0]['name'],
-            'data' : users,
+            // 'data' : users,
         });
 
         
@@ -256,8 +260,8 @@ export const UserUpdate = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': 'Error'
-            // 'message': err,
+            // 'message': 'Error'
+            'message': err,
             // 'message': err['errors'][0]['message']
         });
     }
@@ -278,7 +282,7 @@ export const UserDelete = async (req, res) => {
             'status' : 1,
             'message': 'Data berhasil dihapus',
             // 'data': user[0]['name'],
-            'data' : "",
+            // 'data' : "",
         });
 
         

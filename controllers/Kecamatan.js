@@ -22,6 +22,12 @@ export const getKecamatan = async (req, res) => {
             });
         }
     } catch (err){
-        console.log(err)
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
     }
 }

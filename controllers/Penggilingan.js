@@ -171,7 +171,8 @@ export const getPenggilinganAll = async (req, res) => {
         res.json({
             'status' : 0,
             // 'message': err['errors'][0]['message']
-            'message': err
+            // 'message': err
+            'message': 'Error'
         });
     }
 }
@@ -200,7 +201,8 @@ export const getPenggilinganDetail = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
         });
     }
 }
@@ -238,7 +240,8 @@ export const PenggilinganCreate = async (req, res) => {
         res.json({
             'status' : 0,
             // 'message': err,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
         });
     }
 }
@@ -267,7 +270,8 @@ export const PenggilinganDelete = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
         });
     }
 }
