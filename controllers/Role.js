@@ -7,7 +7,8 @@ export const getRoles = async (req, res) => {
         const roles = await Roles.findAll({
             where: {
                 deletedat: null
-            }
+            },
+            attributes: { exclude: ['createdAt','updatedAt', 'deletedAt'] }
         });
 
         if(roles.length > 0){
