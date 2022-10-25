@@ -1,22 +1,33 @@
 // Import model Product
-import Penyuluhs from "../models/PenyuluhModel.js";
+import Penggilingans from "../models/PenggilinganModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
+import Kecamatans from "../models/KecamatanModel.js";
+import Kelurahans from "../models/KelurahanModel.js";
 import {Op} from "sequelize";
-import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getPenyuluh = async(req, res) =>{
-    Penyuluhs.belongsTo(Kabkotas, {
+export const getPenggilingan = async(req, res) =>{
+     Penggilingans.belongsTo(Kabkotas, {
         targetKey:'id',
         foreignKey: 'kabkota_id'
+     });
+
+     Penggilingans.belongsTo(Kecamatans, {
+        targetKey:'id',
+        foreignKey: 'kecamatan_id'
+     });
+
+     Penggilingans.belongsTo(Kelurahans, {
+        targetKey:'id',
+        foreignKey: 'kelurahan_id'
      });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await Penyuluhs.count({
+    const totalRows = await Penggilingans.count({
         where: {
             deletedAt: null
         },
@@ -24,26 +35,33 @@ export const getPenyuluh = async(req, res) =>{
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
-            }}, {nip:{
+            }}, {alamat:{
                 [Op.like]: '%'+search+'%'
             }}]
         }
     }); 
     const totalPage = Math.ceil(totalRows / limit);
-    const result = await Penyuluhs.findAll({
+    const result = await Penggilingans.findAll({
         include: [
         {
             model: Kabkotas,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+            model: Kecamatans,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+            model: Kelurahans,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         }
         ],
 
-        
         where:{
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
-            }}, {nip:{
+            }}, {alamat:{
                 [Op.like]: '%'+search+'%'
             }}]
         },
@@ -87,14 +105,35 @@ export const getPenyuluh = async(req, res) =>{
 }
 
 
-// Get semua penyuluhs
-export const getPenyuluhAll = async (req, res) => {
+// Get semua penggilingans
+export const getPenggilinganAll = async (req, res) => {
     try {
-        Penyuluhs.belongsTo(Kabkotas, { targetKey:'id', foreignKey: 'kabkota_id'});
-        const penyuluhs = await Penyuluhs.findAll({
+        Penggilingans.belongsTo(Kabkotas, {
+            targetKey:'id',
+            foreignKey: 'kabkota_id'
+         });
+    
+         Penggilingans.belongsTo(Kecamatans, {
+            targetKey:'id',
+            foreignKey: 'kecamatan_id'
+         });
+    
+         Penggilingans.belongsTo(Kelurahans, {
+            targetKey:'id',
+            foreignKey: 'kelurahan_id'
+         });
+        const penggilingans = await Penggilingans.findAll({
             include: [
                 {
                     model: Kabkotas,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                },
+                {
+                    model: Kecamatans,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                },
+                {
+                    model: Kelurahans,
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
                 }
                 ],
@@ -105,14 +144,14 @@ export const getPenyuluhAll = async (req, res) => {
 
         });
 
-        if(penyuluhs.length > 0){
+        if(penggilingans.length > 0){
 
             res.statusCode = 200;
             res.json({
                 'status' : 1,
                 'message': 'Data berhasil ditemukan',
-                // 'data': Penyuluh[0]['name'],
-                'data' : penyuluhs,
+                // 'data': Penggilingan[0]['name'],
+                'data' : penggilingans,
             });
 
         }else{
@@ -137,10 +176,10 @@ export const getPenyuluhAll = async (req, res) => {
     }
 }
 
-// Get detail penyuluhs
-export const getPenyuluhDetail = async (req, res) => {
+// Get detail penggilingans
+export const getPenggilinganDetail = async (req, res) => {
     try {
-        const penyuluhs = await Penyuluhs.findOne({
+        const penggilingans = await Penggilingans.findOne({
             where: {
                 id: req.body.id,
                 deletedAt: null
@@ -151,8 +190,8 @@ export const getPenyuluhDetail = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil ditemukan',
-            // 'data': Penyuluh[0]['name'],
-            'data' : penyuluhs,
+            // 'data': Penggilingan[0]['name'],
+            'data' : penggilingans,
         });
 
         
@@ -166,25 +205,20 @@ export const getPenyuluhDetail = async (req, res) => {
     }
 }
 
-// Add penyuluhs
-export const PenyuluhCreate = async (req, res) => {
+// Add penggilingans
+export const PenggilinganCreate = async (req, res) => {
     var datetime = new Date();
     try {
         // var p = req.body.pass;
-        const penyuluhs = await Penyuluhs.create(
+        const penggilingans = await Penggilingans.create(
             {
 				nama: req.body.nama,
-				nip: req.body.nip,
                 kabkota_id: req.body.kabkota_id,
-				gender: req.body.gender,
-                pangkat: req.body.pangkat,
-                pendidikan : req.body.pendidikan,
-                golongan : req.body.golongan,
-                jabatan : req.body.jabatan,
-                lokasi_tugas : req.body.lokasi_tugas,
-                sub_sektor : req.body.sub_sektor,
-                wilayah_binaan : req.body.wilayah_binaan,
-                no_hp : req.body.no_hp,
+				kecamatan_id: req.body.kecamatan_id,
+                kelurahan_id: req.body.kelurahan_id,
+                alamat: req.body.alamat,
+                kapasitas : req.body.kapasitas,
+                lokasi : req.body.lokasi,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -193,8 +227,8 @@ export const PenyuluhCreate = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
-            // 'data': Penyuluh[0]['name'],
-            'data' : penyuluhs,
+            // 'data': Penggilingan[0]['name'],
+            'data' : penggilingans,
         });
 
         
@@ -209,11 +243,11 @@ export const PenyuluhCreate = async (req, res) => {
     }
 }
 
-// Delete penyuluhs
-export const PenyuluhDelete = async (req, res) => {
+// Delete penggilingans
+export const PenggilinganDelete = async (req, res) => {
     var datetime = new Date();
     try {
-        const penyuluhs = await Penyuluhs.update({deletedAt: datetime},{
+        const penggilingans = await Penggilingans.update({deletedAt: datetime},{
             where:{
                 id: req.body.id
             }
@@ -223,7 +257,7 @@ export const PenyuluhDelete = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil dihapus',
-            // 'data': Penyuluh[0]['name'],
+            // 'data': Penggilingan[0]['name'],
             'data' : "",
         });
 

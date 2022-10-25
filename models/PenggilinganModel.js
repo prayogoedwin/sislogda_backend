@@ -7,7 +7,7 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
  
 // Define schema
-const Penyuluhs = db.define('sis_penyuluh', {
+const Penggilingans = db.define('sis_penggilingan', {
   // Define attributes
   id: {
     type: DataTypes.INTEGER,
@@ -19,35 +19,23 @@ const Penyuluhs = db.define('sis_penyuluh', {
   nama: {
     type: DataTypes.STRING
   },
-  nip: {
+  kabkota_id: {
+    type: DataTypes.INTEGER
+  },
+  kecamatan_id: {
+    type: DataTypes.INTEGER
+  },
+  kelurahan_id: {
+    type: DataTypes.INTEGER
+  },
+  alamat: {
     type: DataTypes.STRING
   },
-  gender: {
-    type: DataTypes.STRING
+  kapasitas: {
+    type: DataTypes.INTEGER
   },
-  pangkat: {
-    type: DataTypes.STRING
-  },
-  pendidikan: {
-    type: DataTypes.STRING
-  },
-  golongan: {
-    type: DataTypes.STRING
-  },
-  jabatan: {
-    type: DataTypes.STRING
-  },
-  lokasi_tugas: {
-    type: DataTypes.STRING
-  },
-  sub_sektor: {
-    type: DataTypes.STRING
-  },
-  wilayah_binaan: {
-    type: DataTypes.STRING
-  },
-  no_hp: {
-    type: DataTypes.STRING
+  lokasi: {
+    type: DataTypes.INTEGER
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -71,4 +59,4 @@ const Penyuluhs = db.define('sis_penyuluh', {
 });
  
 // Export model Product
-export default Penyuluhs;
+export default Penggilingans;

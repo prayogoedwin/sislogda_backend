@@ -2,7 +2,6 @@
 import Penyuluhs from "../models/PenyuluhModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
 import {Op} from "sequelize";
-import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -38,7 +37,6 @@ export const getPenyuluh = async(req, res) =>{
         }
         ],
 
-        
         where:{
             deletedAt: null,
             [Op.or]: [{nama:{
@@ -80,8 +78,6 @@ export const getPenyuluh = async(req, res) =>{
         });
 
     }
-
-            
 
     
 }

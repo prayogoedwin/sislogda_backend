@@ -143,7 +143,8 @@ export const getUsersAll = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            'message': 'Error'
+            // 'message': err['errors'][0]['message']
             // 'message': err
         });
     }
@@ -173,7 +174,8 @@ export const getUsersDetail = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            'message': 'Error'
+            // 'message': err['errors'][0]['message']
         });
     }
 }
@@ -211,8 +213,52 @@ export const UserCreate = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
+            'message': 'Error'
             // 'message': err,
-            'message': err['errors'][0]['message']
+            // 'message': err['errors'][0]['message']
+        });
+    }
+}
+
+
+// Edit users
+export const UserUpdate = async (req, res) => {
+    var datetime = new Date();
+    try {
+        // var p = req.body.pass;
+
+        const users = await Users.update(
+            {
+				email: req.body.email,
+				nama_lengkap: req.body.nama_lengkap,
+                role_id: req.body.role_id,
+                kabkota_id : req.body.kabkota_id,
+                updatedAt: datetime
+                // created_by: req.body.created_by
+            },{
+                where:{
+                    id: req.body.user_id
+                }
+            }
+            );
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil di edit',
+            // 'data': user[0]['name'],
+            'data' : users,
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': 'Error'
+            // 'message': err,
+            // 'message': err['errors'][0]['message']
         });
     }
 }
@@ -241,7 +287,8 @@ export const UserDelete = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': err['errors'][0]['message']
+            'message': 'Error'
+            // 'message': err['errors'][0]['message']
         });
     }
 }
