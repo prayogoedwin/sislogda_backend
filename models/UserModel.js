@@ -26,7 +26,7 @@ const Users = db.define('sis_users', {
         })
           .then((user) => {
             if (user.length != 0)
-              next(new Error('Email address already in use!'));
+              next(new Error('Email sudah digunakan!'));
             next();
           })
           .catch((onError) => console.log(onError));
@@ -41,7 +41,6 @@ const Users = db.define('sis_users', {
   },
   kabkota_id: {
     type: DataTypes.INTEGER,
-    allowNull: true,
   },
   is_active: {
     type: DataTypes.INTEGER
