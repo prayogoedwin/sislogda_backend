@@ -233,7 +233,6 @@ export const UserUpdate = async (req, res) => {
 
         const users = await Users.update(
             {
-				email: req.body.email,
 				nama_lengkap: req.body.nama_lengkap,
                 role_id: req.body.role_id,
                 kabkota_id : req.body.kabkota_id,
