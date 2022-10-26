@@ -1,5 +1,6 @@
 // Import express
 import express from "express";
+import cors from "cors";
 // Import Controller Product
 import { 
     loginUser
@@ -11,7 +12,9 @@ import {
 
  import { 
     getUsers,
+    getUsersRole,
     getUsersAll,
+    getUsersRoleAll,
     UserCreate,
     getUsersDetail,
     UserUpdate,
@@ -72,19 +75,38 @@ import {
    KoperasiUpdate
 } from "../controllers/Koperasi.js";
 
- import {
+import {
    getKabkotas,
    getKabKotasByProv,
 } from "../controllers/Kabkota.js"
  import {getKecamatan} from "../controllers/Kecamatan.js"
  import {getKelurahan} from "../controllers/Kelurahan.js"
+
+
+ //for middleware
+ import {LogCreate} from "../middleware/Log.js"
+
+
+// import Logs from "../models/LogModel.js";
  
  // Init express router
 const router = express.Router();
+router.use(cors());
+
+const doLogger = function async(req, res, next) {
+   LogCreate()
+   next()
+}
+  
+          
+      
+
+
+
+router.use(doLogger);
 
 // Route get semua users
 // router.get('/users', getUsers);
-
 router.post('/api/login', loginUser);
 router.get('/api/roles', getRoles);
 
@@ -96,7 +118,9 @@ router.get('/api/kelurahan', getKelurahan);
 
 //users crud
 router.get('/api/users', getUsers);
+router.get('/api/users/role', getUsersRole);
 router.get('/api/users/all', getUsersAll);
+router.get('/api/users/role_all', getUsersRoleAll);
 router.post('/api/user/add', UserCreate);
 router.post('/api/user/detail', getUsersDetail);
 router.post('/api/user/edit', UserUpdate);

@@ -94,6 +94,95 @@ export const getUsers = async(req, res) =>{
 }
 
 
+export const getUsersRole = async(req, res) =>{
+    Users.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id'
+     });
+
+    Users.belongsTo(Roles, {
+        targetKey:'id',
+        foreignKey: 'role_id'
+     });
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Users.count({
+       
+        where:{
+            role_id: req.query.role_id,
+            deletedAt: null,
+            [Op.or]: [{nama_lengkap:{
+                [Op.like]: '%'+search+'%'
+            }}, {email:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        }
+    }); 
+    const totalPage = Math.ceil(totalRows / limit);
+    const result = await Users.findAll({
+        include: [
+        {
+            model: Roles,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+            model: Kabkotas,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        }
+        ],
+
+      
+        where:{
+            role_id: req.query.role_id,
+            deletedAt: null,
+            [Op.or]: [{nama_lengkap:{
+                [Op.like]: '%'+search+'%'
+            }}, {email:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        },
+        
+        attributes: { exclude: ['updatedAt', 'deletedAt', 'password'] },
+        offset: offset,
+        limit: limit,
+        order:[
+            ['id', 'DESC']
+        ]
+    });
+
+    if(result.length > 0){
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Berhasil Ambil Data',
+            'limit' : limit,
+            'totalRows' : totalRows,
+            'totalPage' : totalPage,
+            'page' : page,
+            'data' : result,
+            
+        });
+
+    }else{
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data Kosong',
+            'data' : Array()
+        });
+
+    }
+
+            
+
+    
+}
+
+
 // Get semua users
 export const getUsersAll = async (req, res) => {
     try {
@@ -111,6 +200,68 @@ export const getUsersAll = async (req, res) => {
                 }
                 ],
             where: {
+                deletedat: null
+            },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt', 'password'] },
+            order:[
+                ['id', 'ASC']
+            ]
+            
+
+        });
+
+        if(users.length > 0){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': user[0]['name'],
+                'data' : users,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Kosong',
+                'data' : Array()
+            });
+
+        }
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': 'Error'
+            // 'message': err['errors'][0]['message']
+            // 'message': err
+        });
+    }
+}
+
+
+// Get semua users
+export const getUsersRoleAll = async (req, res) => {
+    try {
+        Users.belongsTo(Roles, {targetKey:'id',foreignKey: 'role_id'});
+        Users.belongsTo(Kabkotas, { targetKey:'id', foreignKey: 'kabkota_id'});
+        const users = await Users.findAll({
+            include: [
+                {
+                    model: Roles,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                },
+                {
+                    model: Kabkotas,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                }
+                ],
+            where: {
+                role_id: req.query.role_id,
                 deletedat: null
             },
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt', 'password'] },
