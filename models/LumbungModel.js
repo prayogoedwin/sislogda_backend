@@ -26,7 +26,7 @@ const Lumbungs = db.define('sis_lumbung', {
     type: DataTypes.INTEGER
   },
   kelurahan_id: {
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING
   },
   kapasitas: {
     type: DataTypes.INTEGER

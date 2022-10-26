@@ -26,7 +26,7 @@ const Distributors = db.define('sis_distributor', {
     type: DataTypes.INTEGER
   },
   kelurahan_id: {
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING
   },
   alamat: {
     type: DataTypes.STRING
