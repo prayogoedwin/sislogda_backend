@@ -23,7 +23,8 @@ import {
    getPenyuluhAll,
    PenyuluhCreate,
    getPenyuluhDetail,
-   PenyuluhDelete
+   PenyuluhDelete,
+   PenyuluhUpdate
 } from "../controllers/Penyuluh.js";
 
 import { 
@@ -31,8 +32,45 @@ import {
    getPenggilinganAll,
    PenggilinganCreate,
    getPenggilinganDetail,
-   PenggilinganDelete
+   PenggilinganDelete,
+   PenggilinganUpdate
 } from "../controllers/Penggilingan.js";
+
+import { 
+   getLumbung,
+   getLumbungAll,
+   LumbungCreate,
+   getLumbungDetail,
+   LumbungDelete,
+   LumbungUpdate
+} from "../controllers/Lumbung.js";
+
+import { 
+   getGudang,
+   getGudangAll,
+   GudangCreate,
+   getGudangDetail,
+   GudangDelete,
+   GudangUpdate
+} from "../controllers/Gudang.js";
+
+import { 
+   getDistributor,
+   getDistributorAll,
+   DistributorCreate,
+   getDistributorDetail,
+   DistributorDelete,
+   DistributorUpdate
+} from "../controllers/Distributor.js";
+
+import { 
+   getKoperasi,
+   getKoperasiAll,
+   KoperasiCreate,
+   getKoperasiDetail,
+   KoperasiDelete,
+   KoperasiUpdate
+} from "../controllers/Koperasi.js";
 
  import {
    getKabkotas,
@@ -69,17 +107,49 @@ router.get('/api/penyuluh', getPenyuluh);
 router.get('/api/penyuluh/all', getPenyuluhAll);
 router.post('/api/penyuluh/add', PenyuluhCreate);
 router.post('/api/penyuluh/detail', getPenyuluhDetail);
-router.post('/api/penyuluh/edit', getUsersDetail);
+router.post('/api/penyuluh/edit', PenyuluhUpdate);
 router.post('/api/penyuluh/delete', PenyuluhDelete);
 
-//penyuluh crud
+//penggilingan crud
 router.get('/api/penggilingan', getPenggilingan);
 router.get('/api/penggilingan/all', getPenggilinganAll);
 router.post('/api/penggilingan/add', PenggilinganCreate);
 router.post('/api/penggilingan/detail', getPenggilinganDetail);
-router.post('/api/penggilingan/edit', getUsersDetail);
+router.post('/api/penggilingan/edit', PenggilinganUpdate);
 router.post('/api/penggilingan/delete', PenggilinganDelete);
 
+//lumbung crud
+router.get('/api/lumbung', getLumbung);
+router.get('/api/lumbung/all', getLumbungAll);
+router.post('/api/lumbung/add', LumbungCreate);
+router.post('/api/lumbung/detail', getLumbungDetail);
+router.post('/api/lumbung/edit', LumbungUpdate);
+router.post('/api/lumbung/delete', LumbungDelete);
 
+//gudang crud
+router.get('/api/gudang', getGudang);
+router.get('/api/gudang/all', getGudangAll);
+router.post('/api/gudang/add', GudangCreate);
+router.post('/api/gudang/detail', getGudangDetail);
+router.post('/api/gudang/edit', GudangUpdate);
+router.post('/api/gudang/delete', GudangDelete);
+
+
+//distributor crud
+router.get('/api/distributor', getDistributor);
+router.get('/api/distributor/all', getDistributorAll);
+router.post('/api/distributor/add', DistributorCreate);
+router.post('/api/distributor/detail', getDistributorDetail);
+router.post('/api/distributor/edit', DistributorUpdate);
+router.post('/api/distributor/delete', DistributorDelete);
+
+
+//koperasi crud
+router.get('/api/koperasi', getKoperasi);
+router.get('/api/koperasi/all', getKoperasiAll);
+router.post('/api/koperasi/add', KoperasiCreate);
+router.post('/api/koperasi/detail', getKoperasiDetail);
+router.post('/api/koperasi/edit', KoperasiUpdate);
+router.post('/api/koperasi/delete', KoperasiDelete);
 
 export default router;

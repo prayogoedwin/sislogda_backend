@@ -1,33 +1,21 @@
 // Import model Product
-import Penggilingans from "../models/PenggilinganModel.js";
+import Gudangs from "../models/GudangModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
-import Kecamatans from "../models/KecamatanModel.js";
-import Kelurahans from "../models/KelurahanModel.js";
 import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getPenggilingan = async(req, res) =>{
-     Penggilingans.belongsTo(Kabkotas, {
+export const getGudang = async(req, res) =>{
+     Gudangs.belongsTo(Kabkotas, {
         targetKey:'id',
         foreignKey: 'kabkota_id'
-     });
-
-     Penggilingans.belongsTo(Kecamatans, {
-        targetKey:'id',
-        foreignKey: 'kecamatan_id'
-     });
-
-     Penggilingans.belongsTo(Kelurahans, {
-        targetKey:'id',
-        foreignKey: 'kelurahan_id'
      });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await Penggilingans.count({
+    const totalRows = await Gudangs.count({
         where: {
             deletedAt: null
         },
@@ -35,24 +23,14 @@ export const getPenggilingan = async(req, res) =>{
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
-            }}, {alamat:{
-                [Op.like]: '%'+search+'%'
             }}]
         }
     }); 
     const totalPage = Math.ceil(totalRows / limit);
-    const result = await Penggilingans.findAll({
+    const result = await Gudangs.findAll({
         include: [
         {
             model: Kabkotas,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        },
-        {
-            model: Kecamatans,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        },
-        {
-            model: Kelurahans,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         }
         ],
@@ -61,12 +39,10 @@ export const getPenggilingan = async(req, res) =>{
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
-            }}, {alamat:{
-                [Op.like]: '%'+search+'%'
             }}]
         },
         
-        attributes: { exclude: ['updatedAt', 'deletedAt', 'password'] },
+        attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
         limit: limit,
         order:[
@@ -105,53 +81,35 @@ export const getPenggilingan = async(req, res) =>{
 }
 
 
-// Get semua penggilingans
-export const getPenggilinganAll = async (req, res) => {
+// Get semua Gudangs
+export const getGudangAll = async (req, res) => {
     try {
-        Penggilingans.belongsTo(Kabkotas, {
+        Gudangs.belongsTo(Kabkotas, {
             targetKey:'id',
             foreignKey: 'kabkota_id'
          });
-    
-         Penggilingans.belongsTo(Kecamatans, {
-            targetKey:'id',
-            foreignKey: 'kecamatan_id'
-         });
-    
-         Penggilingans.belongsTo(Kelurahans, {
-            targetKey:'id',
-            foreignKey: 'kelurahan_id'
-         });
-        const penggilingans = await Penggilingans.findAll({
+        const gudangs = await Gudangs.findAll({
             include: [
                 {
                     model: Kabkotas,
-                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-                },
-                {
-                    model: Kecamatans,
-                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-                },
-                {
-                    model: Kelurahans,
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
                 }
                 ],
             where: {
                 deletedAt: null
             },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt', 'password'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
 
         });
 
-        if(penggilingans.length > 0){
+        if(gudangs.length > 0){
 
             res.statusCode = 200;
             res.json({
                 'status' : 1,
                 'message': 'Data berhasil ditemukan',
                 // 'data': Penggilingan[0]['name'],
-                'data' : penggilingans,
+                'data' : gudangs,
             });
 
         }else{
@@ -177,10 +135,10 @@ export const getPenggilinganAll = async (req, res) => {
     }
 }
 
-// Get detail penggilingans
-export const getPenggilinganDetail = async (req, res) => {
+// Get detail Gudangs
+export const getGudangDetail = async (req, res) => {
     try {
-        const penggilingans = await Penggilingans.findOne({
+        const gudangs = await Gudangs.findOne({
             where: {
                 id: req.body.id,
                 deletedAt: null
@@ -192,7 +150,7 @@ export const getPenggilinganDetail = async (req, res) => {
             'status' : 1,
             'message': 'Data berhasil ditemukan',
             // 'data': Penggilingan[0]['name'],
-            'data' : penggilingans,
+            'data' : gudangs,
         });
 
         
@@ -207,20 +165,17 @@ export const getPenggilinganDetail = async (req, res) => {
     }
 }
 
-// Add penggilingans
-export const PenggilinganCreate = async (req, res) => {
+// Add Gudangs
+export const GudangCreate = async (req, res) => {
     var datetime = new Date();
     try {
         // var p = req.body.pass;
-        const penggilingans = await Penggilingans.create(
+        const gudangs = await Gudangs.create(
             {
 				nama: req.body.nama,
                 kabkota_id: req.body.kabkota_id,
-				kecamatan_id: req.body.kecamatan_id,
-                kelurahan_id: req.body.kelurahan_id,
                 alamat: req.body.alamat,
                 kapasitas : req.body.kapasitas,
-                lokasi : req.body.lokasi,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -229,8 +184,8 @@ export const PenggilinganCreate = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
-            // 'data': Penggilingan[0]['name'],
-            'data' : penggilingans,
+            // 'data': Gudang[0]['name'],
+            'data' : gudangs,
         });
 
         
@@ -247,18 +202,15 @@ export const PenggilinganCreate = async (req, res) => {
 }
 
 
-// Delete penggilingans
-export const PenggilinganUpdate = async (req, res) => {
+// Delete Gudangs
+export const GudangUpdate = async (req, res) => {
     var datetime = new Date();
     try {
-        const penggilingans = await Penggilingans.update({
+        const gudangs = await Gudangs.update({
             nama: req.body.nama,
             kabkota_id: req.body.kabkota_id,
-            kecamatan_id: req.body.kecamatan_id,
-            kelurahan_id: req.body.kelurahan_id,
             alamat: req.body.alamat,
             kapasitas : req.body.kapasitas,
-            lokasi : req.body.lokasi,
             updatedAt: datetime
         },{
             where:{
@@ -270,7 +222,7 @@ export const PenggilinganUpdate = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil diupdate',
-            // 'data': Penggilingan[0]['name'],
+            // 'data': Gudang[0]['name'],
             'data' : "",
         });
 
@@ -286,11 +238,11 @@ export const PenggilinganUpdate = async (req, res) => {
     }
 }
 
-// Delete penggilingans
-export const PenggilinganDelete = async (req, res) => {
+// Delete Gudangs
+export const GudangDelete = async (req, res) => {
     var datetime = new Date();
     try {
-        const penggilingans = await Penggilingans.update({deletedAt: datetime},{
+        const gudangs = await Gudangs.update({deletedAt: datetime},{
             where:{
                 id: req.body.id
             }
@@ -300,7 +252,7 @@ export const PenggilinganDelete = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil dihapus',
-            // 'data': Penggilingan[0]['name'],
+            // 'data': Gudang[0]['name'],
             'data' : "",
         });
 

@@ -1,5 +1,5 @@
 // Import model Product
-import Penggilingans from "../models/PenggilinganModel.js";
+import Distributors from "../models/DistributorModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
 import Kecamatans from "../models/KecamatanModel.js";
 import Kelurahans from "../models/KelurahanModel.js";
@@ -7,18 +7,18 @@ import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getPenggilingan = async(req, res) =>{
-     Penggilingans.belongsTo(Kabkotas, {
+export const getDistributor = async(req, res) =>{
+     Distributors.belongsTo(Kabkotas, {
         targetKey:'id',
         foreignKey: 'kabkota_id'
      });
 
-     Penggilingans.belongsTo(Kecamatans, {
+     Distributors.belongsTo(Kecamatans, {
         targetKey:'id',
         foreignKey: 'kecamatan_id'
      });
 
-     Penggilingans.belongsTo(Kelurahans, {
+     Distributors.belongsTo(Kelurahans, {
         targetKey:'id',
         foreignKey: 'kelurahan_id'
      });
@@ -27,21 +27,16 @@ export const getPenggilingan = async(req, res) =>{
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await Penggilingans.count({
-        where: {
-            deletedAt: null
-        },
+    const totalRows = await Distributors.count({
         where:{
             deletedAt: null,
             [Op.or]: [{nama:{
-                [Op.like]: '%'+search+'%'
-            }}, {alamat:{
                 [Op.like]: '%'+search+'%'
             }}]
         }
     }); 
     const totalPage = Math.ceil(totalRows / limit);
-    const result = await Penggilingans.findAll({
+    const result = await Distributors.findAll({
         include: [
         {
             model: Kabkotas,
@@ -61,12 +56,10 @@ export const getPenggilingan = async(req, res) =>{
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
-            }}, {alamat:{
-                [Op.like]: '%'+search+'%'
             }}]
         },
         
-        attributes: { exclude: ['updatedAt', 'deletedAt', 'password'] },
+        attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
         limit: limit,
         order:[
@@ -105,24 +98,24 @@ export const getPenggilingan = async(req, res) =>{
 }
 
 
-// Get semua penggilingans
-export const getPenggilinganAll = async (req, res) => {
+// Get semua Distributors
+export const getDistributorAll = async (req, res) => {
     try {
-        Penggilingans.belongsTo(Kabkotas, {
+        Distributors.belongsTo(Kabkotas, {
             targetKey:'id',
             foreignKey: 'kabkota_id'
          });
     
-         Penggilingans.belongsTo(Kecamatans, {
+         Distributors.belongsTo(Kecamatans, {
             targetKey:'id',
             foreignKey: 'kecamatan_id'
          });
     
-         Penggilingans.belongsTo(Kelurahans, {
+         Distributors.belongsTo(Kelurahans, {
             targetKey:'id',
             foreignKey: 'kelurahan_id'
          });
-        const penggilingans = await Penggilingans.findAll({
+        const distributors = await Distributors.findAll({
             include: [
                 {
                     model: Kabkotas,
@@ -140,18 +133,18 @@ export const getPenggilinganAll = async (req, res) => {
             where: {
                 deletedAt: null
             },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt', 'password'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
 
         });
 
-        if(penggilingans.length > 0){
+        if(distributors.length > 0){
 
             res.statusCode = 200;
             res.json({
                 'status' : 1,
                 'message': 'Data berhasil ditemukan',
                 // 'data': Penggilingan[0]['name'],
-                'data' : penggilingans,
+                'data' : distributors,
             });
 
         }else{
@@ -177,10 +170,10 @@ export const getPenggilinganAll = async (req, res) => {
     }
 }
 
-// Get detail penggilingans
-export const getPenggilinganDetail = async (req, res) => {
+// Get detail distributors
+export const getDistributorDetail = async (req, res) => {
     try {
-        const penggilingans = await Penggilingans.findOne({
+        const distributors = await Distributors.findOne({
             where: {
                 id: req.body.id,
                 deletedAt: null
@@ -192,7 +185,7 @@ export const getPenggilinganDetail = async (req, res) => {
             'status' : 1,
             'message': 'Data berhasil ditemukan',
             // 'data': Penggilingan[0]['name'],
-            'data' : penggilingans,
+            'data' : distributors,
         });
 
         
@@ -207,20 +200,20 @@ export const getPenggilinganDetail = async (req, res) => {
     }
 }
 
-// Add penggilingans
-export const PenggilinganCreate = async (req, res) => {
+// Add distributors
+export const DistributorCreate = async (req, res) => {
     var datetime = new Date();
     try {
         // var p = req.body.pass;
-        const penggilingans = await Penggilingans.create(
+        const distributors = await Distributors.create(
             {
 				nama: req.body.nama,
                 kabkota_id: req.body.kabkota_id,
 				kecamatan_id: req.body.kecamatan_id,
                 kelurahan_id: req.body.kelurahan_id,
-                alamat: req.body.alamat,
-                kapasitas : req.body.kapasitas,
-                lokasi : req.body.lokasi,
+                alamat : req.body.alamat,
+                komoditas : req.body.komoditas,
+                nomor : req.body.nomor,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -229,8 +222,8 @@ export const PenggilinganCreate = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
-            // 'data': Penggilingan[0]['name'],
-            'data' : penggilingans,
+            // 'data': Distributor[0]['name'],
+            'data' : distributors,
         });
 
         
@@ -247,19 +240,19 @@ export const PenggilinganCreate = async (req, res) => {
 }
 
 
-// Delete penggilingans
-export const PenggilinganUpdate = async (req, res) => {
+// Delete distributors
+export const DistributorUpdate = async (req, res) => {
     var datetime = new Date();
     try {
-        const penggilingans = await Penggilingans.update({
-            nama: req.body.nama,
-            kabkota_id: req.body.kabkota_id,
-            kecamatan_id: req.body.kecamatan_id,
-            kelurahan_id: req.body.kelurahan_id,
-            alamat: req.body.alamat,
-            kapasitas : req.body.kapasitas,
-            lokasi : req.body.lokasi,
-            updatedAt: datetime
+        const distributors = await Distributors.update({
+                nama: req.body.nama,
+                kabkota_id: req.body.kabkota_id,
+				kecamatan_id: req.body.kecamatan_id,
+                kelurahan_id: req.body.kelurahan_id,
+                alamat : req.body.alamat,
+                komoditas : req.body.komoditas,
+                nomor : req.body.nomor,
+                updatedAt: datetime
         },{
             where:{
                 id: req.body.id
@@ -270,7 +263,7 @@ export const PenggilinganUpdate = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil diupdate',
-            // 'data': Penggilingan[0]['name'],
+            // 'data': Distributor[0]['name'],
             'data' : "",
         });
 
@@ -286,11 +279,11 @@ export const PenggilinganUpdate = async (req, res) => {
     }
 }
 
-// Delete penggilingans
-export const PenggilinganDelete = async (req, res) => {
+// Delete distributors
+export const DistributorDelete = async (req, res) => {
     var datetime = new Date();
     try {
-        const penggilingans = await Penggilingans.update({deletedAt: datetime},{
+        const distributors = await Distributors.update({deletedAt: datetime},{
             where:{
                 id: req.body.id
             }
@@ -300,7 +293,7 @@ export const PenggilinganDelete = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil dihapus',
-            // 'data': Penggilingan[0]['name'],
+            // 'data': Distributor[0]['name'],
             'data' : "",
         });
 

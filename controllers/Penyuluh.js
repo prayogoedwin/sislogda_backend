@@ -16,9 +16,6 @@ export const getPenyuluh = async(req, res) =>{
     const search = req.query.search_query || "";
     const offset = limit * page;
     const totalRows = await Penyuluhs.count({
-        where: {
-            deletedAt: null
-        },
         where:{
             deletedAt: null,
             [Op.or]: [{nama:{
@@ -202,6 +199,52 @@ export const PenyuluhCreate = async (req, res) => {
         res.json({
             'status' : 0,
             // 'message': err,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
+// Update penyuluhs
+export const PenyuluhUpdate = async (req, res) => {
+    var datetime = new Date();
+    try {
+        const penyuluhs = await Penyuluhs.update(
+            {
+				nama: req.body.nama,
+				nip: req.body.nip,
+                kabkota_id: req.body.kabkota_id,
+				gender: req.body.gender,
+                pangkat: req.body.pangkat,
+                pendidikan : req.body.pendidikan,
+                golongan : req.body.golongan,
+                jabatan : req.body.jabatan,
+                lokasi_tugas : req.body.lokasi_tugas,
+                sub_sektor : req.body.sub_sektor,
+                wilayah_binaan : req.body.wilayah_binaan,
+                no_hp : req.body.no_hp,
+                updatedAt: datetime
+            }
+            ,{
+            where:{
+                id: req.body.id
+            }
+        });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil diupdate',
+            // 'data': Penyuluh[0]['name'],
+            'data' : "",
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
             // 'message': err['errors'][0]['message']
             'message': 'Error'
         });
