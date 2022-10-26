@@ -47,7 +47,7 @@ export const getPenyuluh = async(req, res) =>{
         offset: offset,
         limit: limit,
         order:[
-            ['id', 'DESC']
+            ['id', 'ASC']
         ]
     });
 
