@@ -140,14 +140,28 @@ export const getPenyuluhDetail = async (req, res) => {
                 deletedAt: null
             }
         });
+        
+        if(penyuluhs){
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditemukan',
-            // 'data': Penyuluh[0]['name'],
-            'data' : penyuluhs,
-        });
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : penyuluhs,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : penyuluhs,
+            });
+
+        }
 
         
     } catch (err) {

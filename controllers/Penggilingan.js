@@ -187,13 +187,27 @@ export const getPenggilinganDetail = async (req, res) => {
             }
         });
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditemukan',
-            // 'data': Penggilingan[0]['name'],
-            'data' : penggilingans,
-        });
+        if(penggilingans){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : penggilingans,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : penggilingans,
+            });
+
+        }
 
         
     } catch (err) {

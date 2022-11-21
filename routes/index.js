@@ -67,6 +67,24 @@ import {
 } from "../controllers/Distributor.js";
 
 import { 
+   getPedagang,
+   getPedagangAll,
+   PedagangCreate,
+   getPedagangDetail,
+   PedagangDelete,
+   PedagangUpdate
+} from "../controllers/Pedagang.js";
+
+import { 
+   getProdusen,
+   getProdusenAll,
+   ProdusenCreate,
+   getProdusenDetail,
+   ProdusenDelete,
+   ProdusenUpdate
+} from "../controllers/Produsen.js";
+
+import { 
    getKoperasi,
    getKoperasiAll,
    KoperasiCreate,
@@ -166,6 +184,23 @@ router.post('/api/distributor/add', DistributorCreate);
 router.post('/api/distributor/detail', getDistributorDetail);
 router.post('/api/distributor/edit', DistributorUpdate);
 router.post('/api/distributor/delete', DistributorDelete);
+
+//pedagang crud
+router.get('/api/Pedagang', getPedagang);
+router.get('/api/Pedagang/all', getPedagangAll);
+router.post('/api/Pedagang/add', PedagangCreate);
+router.post('/api/Pedagang/detail', getPedagangDetail);
+router.post('/api/Pedagang/edit', PedagangUpdate);
+router.post('/api/Pedagang/delete', PedagangDelete);
+
+
+//produsen crud
+router.get('/api/produsen', getProdusen);
+router.get('/api/produsen/all', getProdusenAll);
+router.post('/api/produsen/add', ProdusenCreate);
+router.post('/api/produsen/detail', getProdusenDetail);
+router.post('/api/produsen/edit', ProdusenUpdate);
+router.post('/api/produsen/delete', ProdusenDelete);
 
 
 //koperasi crud

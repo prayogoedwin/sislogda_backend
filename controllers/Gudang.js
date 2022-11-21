@@ -145,14 +145,27 @@ export const getGudangDetail = async (req, res) => {
             }
         });
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditemukan',
-            // 'data': Penggilingan[0]['name'],
-            'data' : gudangs,
-        });
+        if(gudangs){
 
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : gudangs,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : gudangs,
+            });
+
+        }
         
     } catch (err) {
         // console.log(err);

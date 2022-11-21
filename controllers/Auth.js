@@ -16,7 +16,6 @@ export const loginUser = async (req, res) => {
         const user = await Users.findAll({
             where: {
                 email: req.body.email,
-                // password: req.body.password,
                 deletedAt: null
             }
         });

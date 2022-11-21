@@ -142,13 +142,27 @@ export const getKoperasiDetail = async (req, res) => {
             }
         });
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditemukan',
-            // 'data': Penggilingan[0]['name'],
-            'data' : koperasis,
-        });
+        if(koperasis){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : koperasis,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : koperasis,
+            });
+
+        }
 
         
     } catch (err) {

@@ -183,13 +183,27 @@ export const getLumbungDetail = async (req, res) => {
             }
         });
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditemukan',
-            // 'data': Penggilingan[0]['name'],
-            'data' : lumbungs,
-        });
+        if(lumbungs){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : lumbungs,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : lumbungs,
+            });
+
+        }
 
         
     } catch (err) {
