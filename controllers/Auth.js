@@ -33,6 +33,7 @@ export const loginUser = async (req, res) => {
                     role : user[0]['role_id'],
                     kabkota_id : user[0]['kabkota_id'],
                     nama_lengkap : user[0]['nama_lengkap'],
+                    kategori_enumerator : user[0]['kategori_enumerator'],
                     id_token : id_token
                 }
                 res.json({

@@ -51,6 +51,9 @@ const Users = db.define('sis_users', {
   token: {
     type: DataTypes.STRING
   },
+  kategori_enumerator: {
+    type: DataTypes.INTEGER
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

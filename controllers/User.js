@@ -362,6 +362,7 @@ export const UserCreate = async (req, res) => {
 				password: hashedpass,
                 role_id: req.body.role_id,
                 kabkota_id : req.body.kabkota_id,
+                kategori_enumerator : req.body.kategori_enumerator,
                 is_active : 1,
                 createdAt: datetime,
                 updatedAt: datetime
@@ -401,6 +402,7 @@ export const UserUpdate = async (req, res) => {
 				nama_lengkap: req.body.nama_lengkap,
                 role_id: req.body.role_id,
                 kabkota_id : req.body.kabkota_id,
+                kategori_enumerator : req.body.kategori_enumerator,
                 updatedAt: datetime
                 // created_by: req.body.created_by
             },{
