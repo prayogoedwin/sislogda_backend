@@ -32,6 +32,7 @@ export const loginUser = async (req, res) => {
                     id : user[0]['id'],
                     email  : user[0]['email'],
                     role : user[0]['role_id'],
+                    kabkota_id : user[0]['kabkota_id'],
                     nama_lengkap : user[0]['nama_lengkap'],
                     id_token : id_token
                 }
@@ -70,6 +71,10 @@ export const loginUser = async (req, res) => {
         }
         
     } catch (err) {
-        console.log(err);
+        // console.log(err);
+        res.json({
+            'status' : 0,
+            'message': 'Error'
+        });
     }
 }
