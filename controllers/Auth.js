@@ -28,12 +28,17 @@ export const loginUser = async (req, res) => {
             if(verified){
                 let id_token = bcrypt.hashSync(req.body.email+datetime, 10);
                 res.statusCode = 200;
+
+                var dt = {
+                    'id' : user[0]['id'],
+                    'email'  : user[0]['email'],
+                    'id_token' : id_token
+                }
                 res.json({
                     'status' : 1,
                     'message': 'User berhasil ditemukan',
-                    'id_token': id_token,
-                    'data' : user[0],
-                    // 'data' : dt
+                    // 'data' : user[0],
+                    'data' : dt
                 });
             } else {
                 res.json({
