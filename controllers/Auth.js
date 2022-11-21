@@ -31,6 +31,8 @@ export const loginUser = async (req, res) => {
                 var dt = {
                     id : user[0]['id'],
                     email  : user[0]['email'],
+                    role : user[0]['role_id'],
+                    nama_lengkap : user[0]['nama_lengkap'],
                     id_token : id_token
                 }
                 res.json({
