@@ -100,6 +100,8 @@ import {
  import {getKecamatan} from "../controllers/Kecamatan.js"
  import {getKelurahan} from "../controllers/Kelurahan.js"
 
+ import {getKategoriEnum} from "../controllers/KategoriEnum.js"
+
 
  //for middleware
  import {LogCreate} from "../middleware/Log.js"
@@ -133,6 +135,9 @@ router.get('/api/kabkotas', getKabkotas);
 router.get('/api/kabkotas/by', getKabKotasByProv);
 router.get('/api/kecamatan', getKecamatan);
 router.get('/api/kelurahan', getKelurahan);
+
+//kateegori
+router.get('/api/kategorienum', getKategoriEnum);
 
 //users crud
 router.get('/api/users', getUsers);
