@@ -93,6 +93,11 @@ import {
    KoperasiUpdate
 } from "../controllers/Koperasi.js";
 
+import { 
+   getLaporanPedagang,
+   LaporanPedagangCreate
+} from "../controllers/LaporanPedagang.js";
+
 import {
    getKabkotas,
    getKabKotasByProv,
@@ -220,5 +225,10 @@ router.post('/api/koperasi/add', KoperasiCreate);
 router.post('/api/koperasi/detail', getKoperasiDetail);
 router.post('/api/koperasi/edit', KoperasiUpdate);
 router.post('/api/koperasi/delete', KoperasiDelete);
+
+//laporan pedagang crud
+router.get('/api/laporanpedagang', getLaporanPedagang);
+router.post('/api/laporanpedagang/add', LaporanPedagangCreate);
+
 
 export default router;
