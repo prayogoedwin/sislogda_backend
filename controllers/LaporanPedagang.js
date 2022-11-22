@@ -1,6 +1,7 @@
 // Import model Product
 import LaporanPedagangs from "../models/LaporanPedagangModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
+import Kabkotas2 from "../models/KabkotaModel.js";
 
 import {Op} from "sequelize";
 import dotenv from "dotenv";
@@ -14,7 +15,7 @@ export const getLaporanPedagang = async(req, res) =>{
         as: 'berasal_dari_'
     });
 
-    LaporanPedagangs.belongsTo(Kabkotas, {
+    LaporanPedagangs.belongsTo(Kabkotas2, {
         targetKey:'id',
         foreignKey: 'dijual_ke',
         as: 'dijual_ke_'
@@ -42,10 +43,10 @@ export const getLaporanPedagang = async(req, res) =>{
                 as: 'berasal_dari_'
             },
             {
-                model: Kabkotas,
+                model: Kabkotas2,
                 attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                 as: 'dijual_ke_'
-            },
+            }
             ],
     
         where:{
