@@ -101,6 +101,7 @@ import {
  import {getKelurahan} from "../controllers/Kelurahan.js"
 
  import {getKategoriEnum} from "../controllers/KategoriEnum.js"
+ import {getKomoditas} from "../controllers/Komoditas.js"
 
 
  //for middleware
@@ -138,6 +139,10 @@ router.get('/api/kelurahan', getKelurahan);
 
 //kateegori
 router.get('/api/kategorienum', getKategoriEnum);
+
+//komoditas
+router.get('/api/komoditas', getKomoditas);
+
 
 //users crud
 router.get('/api/users', getUsers);
