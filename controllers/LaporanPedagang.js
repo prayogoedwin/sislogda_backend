@@ -12,12 +12,6 @@ export const getLaporanPedagang = async(req, res) =>{
         targetKey:'id',
         foreignKey: 'berasal_dari'
     });
-
-    LaporanPedagangs.belongsTo(Kabkotas, {
-        targetKey:'id',
-        foreignKey: 'dijual_ke'
-    });
-
      
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
