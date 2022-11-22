@@ -10,7 +10,10 @@ const { DataTypes } = Sequelize;
 const KategoriEnums = db.define('sis_kategori_enum', {
   // Define attributes
     id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        unique: true,
         primaryKey: true
     },
     name: {

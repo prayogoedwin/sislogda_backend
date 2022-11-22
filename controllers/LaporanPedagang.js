@@ -10,9 +10,16 @@ export const getLaporanPedagang = async(req, res) =>{
 
     LaporanPedagangs.belongsTo(Kabkotas, {
         targetKey:'id',
-        foreignKey: 'berasal_dari'
+        foreignKey: 'berasal_dari',
+        as: 'berasal_dari_'
     });
-     
+
+    LaporanPedagangs.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'dijual_ke',
+        as: 'dijual_ke_'
+    });
+
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
@@ -28,6 +35,19 @@ export const getLaporanPedagang = async(req, res) =>{
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await LaporanPedagangs.findAll({
+        include: [
+            {
+                model: Kabkotas,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                as: 'berasal_dari_'
+            },
+            {
+                model: Kabkotas,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                as: 'dijual_ke_'
+            },
+            ],
+    
         where:{
             kategori_laporan: '2',
             deletedAt: null,
@@ -36,7 +56,7 @@ export const getLaporanPedagang = async(req, res) =>{
             }}]
         },
         
-        attributes: { exclude: ['updatedAt', 'deletedAt'] },
+        attributes: { exclude: ['updatedAt', 'deletedAt', 'berasal_dari', 'dijual_ke'] },
         offset: offset,
         limit: limit,
         order:[
