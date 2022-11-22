@@ -26,7 +26,7 @@ export const getPedagang = async(req, res) =>{
 
      Pedagangs.belongsTo(Komoditass, {
         targetKey:'id',
-        foreignKey: 'komoditas'
+        foreignKey: 'komoditas',
      });
 
     const page = parseInt(req.query.page) || 0;
