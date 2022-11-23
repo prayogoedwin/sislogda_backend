@@ -356,9 +356,8 @@ export const UserCreate = async (req, res) => {
     try {
         // var p = req.body.pass;
         let hashedpass = bcrypt.hashSync(req.body.password, 10);
-        const [users, created] = await Users.findOrCreate(
+        const users = await Users.create(
             {
-                where: { email },
 				email: req.body.email,
 				nama_lengkap: req.body.nama_lengkap,
 				password: hashedpass,
@@ -386,8 +385,8 @@ export const UserCreate = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            'message': 'Error'
-            // 'message': err,
+            'message': 'Error',
+            'message': err,
             // 'message': err['errors'][0]['message']
         });
     }

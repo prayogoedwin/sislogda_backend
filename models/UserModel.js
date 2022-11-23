@@ -54,7 +54,7 @@ const Users = db.define('sis_users', {
   kategori_enumerator: {
     type: DataTypes.INTEGER
   },
-  komditas: {
+  komoditas: {
     type: DataTypes.INTEGER
   },
   createdAt: {
