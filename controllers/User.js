@@ -353,43 +353,67 @@ export const getUsersDetail = async (req, res) => {
 // Add users
 export const UserCreate = async (req, res) => {
     var datetime = new Date();
-    try {
-        // var p = req.body.pass;
-        let hashedpass = bcrypt.hashSync(req.body.password, 10);
-        const users = await Users.create(
-            {
-				email: req.body.email,
-				nama_lengkap: req.body.nama_lengkap,
-				password: hashedpass,
-                role_id: req.body.role_id,
-                kabkota_id : req.body.kabkota_id,
-                kategori_enumerator : req.body.kategori_enumerator,
-                komoditas : req.body.komoditas,
-                is_active : 1,
-                createdAt: datetime,
-                updatedAt: datetime
-                // created_by: req.body.created_by
-            });
+
+    const create = await Users.findOne({
+        where: {
+            email: req.body.email,
+            deletedAt: null
+        }
+    });
+
+    if(create){
 
         res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditambahkan',
-            // 'data': user[0]['name'],
-            'data' : users,
-        });
+            res.json({
+                'status' : 0,
+                'message': 'Email Sudah Pernah DiDaftarkan',
+                // 'data': user[0]['name'],
+                // 'data' : users,
+            });
 
-        
-    } catch (err) {
-        // console.log(err);
-        res.statusCode = 404;
-        res.json({
-            'status' : 0,
-            'message': 'Error',
-            'message': err,
-            // 'message': err['errors'][0]['message']
-        });
+    }else{
+
+        try {
+            // var p = req.body.pass;
+            let hashedpass = bcrypt.hashSync(req.body.password, 10);
+            const users = await Users.create(
+                {
+                    email: req.body.email,
+                    nama_lengkap: req.body.nama_lengkap,
+                    password: hashedpass,
+                    role_id: req.body.role_id,
+                    kabkota_id : req.body.kabkota_id,
+                    kategori_enumerator : req.body.kategori_enumerator,
+                    komoditas : req.body.komoditas,
+                    is_active : 1,
+                    createdAt: datetime,
+                    updatedAt: datetime
+                    // created_by: req.body.created_by
+                });
+    
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditambahkan',
+                // 'data': user[0]['name'],
+                'data' : users,
+            });
+    
+            
+        } catch (err) {
+            // console.log(err);
+            res.statusCode = 404;
+            res.json({
+                'status' : 0,
+                'message': 'Error'
+                // 'message': err,
+                // 'message': err['errors'][0]['message']
+            });
+        }
+
     }
+
+    
 }
 
 
