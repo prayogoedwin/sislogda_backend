@@ -39,19 +39,20 @@ export const getPedagang = async(req, res) =>{
 
     var whereClause;
 
-    if (req.query.kabkota_id != '' ) {
+    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
         whereClause = {
             kabkota_id: req.query.kabkota_id,
+            komoditas: req.query.komoditas,
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
             }}]
         };
-    }else if(req.query.kabkota_id != '' && req.query.komoditas != ''){
+    }else if(req.query.kabkota_id != '' ){
 
         whereClause = {
             kabkota_id: req.query.kabkota_id,
-            komoditas: req.query.komoditas,
+            
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
