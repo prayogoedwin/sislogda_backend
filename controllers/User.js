@@ -356,8 +356,9 @@ export const UserCreate = async (req, res) => {
     try {
         // var p = req.body.pass;
         let hashedpass = bcrypt.hashSync(req.body.password, 10);
-        const users = await Users.create(
+        const [users, created] = await Users.findOrCreate(
             {
+                where: { email },
 				email: req.body.email,
 				nama_lengkap: req.body.nama_lengkap,
 				password: hashedpass,
