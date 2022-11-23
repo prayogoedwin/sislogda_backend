@@ -1,7 +1,5 @@
 // Import model Product
 import LaporanPedagangs from "../models/LaporanPedagangModel.js";
-import Kabkotas from "../models/KabkotaModel.js";
-import Kabkotas2 from "../models/KabkotaModel.js";
 
 import {Op} from "sequelize";
 import dotenv from "dotenv";
@@ -117,6 +115,7 @@ export const LaporanPedagangCreate = async (req, res) => {
                 dijual_ke : req.body.dijual_ke,
                 createdby : req.body.createdby,
                 kabkota_id : req.body.kabkota_id,
+                komoditas : req.body.komoditas,
                 createdAt: datetime,
                 updatedAt: datetime
             });
