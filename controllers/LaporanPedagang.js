@@ -25,14 +25,24 @@ export const getLaporanPedagang = async(req, res) =>{
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await LaporanPedagangs.count({
-        where:{
-            kategori_laporan: '2',
+
+    var whereClause;
+
+    if (req.query.kabkota_id != '' ) {
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
             deletedAt: null,
-            [Op.or]: [{tahun:{
-                [Op.like]: '%'+search+'%'
-            }}]
-        }
+        };
+    }else{
+
+        whereClause = {
+            deletedAt: null
+        };
+
+    }
+
+    const totalRows = await LaporanPedagangs.count({
+        where:whereClause
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await LaporanPedagangs.findAll({
@@ -49,13 +59,7 @@ export const getLaporanPedagang = async(req, res) =>{
         //     }
         //     ],
     
-        where:{
-            kategori_laporan: '2',
-            deletedAt: null,
-            [Op.or]: [{tahun:{
-                [Op.like]: '%'+search+'%'
-            }}]
-        },
+        where:whereClause,
         
         attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
