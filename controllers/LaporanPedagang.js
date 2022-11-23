@@ -115,6 +115,8 @@ export const LaporanPedagangCreate = async (req, res) => {
                 harga_beli : req.body.harga_beli,
                 berasal_dari : req.body.berasal_dari,
                 dijual_ke : req.body.dijual_ke,
+                createdby : req.body.createdby,
+                kabkota_id : req.body.kabkota_id,
                 createdAt: datetime,
                 updatedAt: datetime
             });

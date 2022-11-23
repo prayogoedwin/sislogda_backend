@@ -55,6 +55,9 @@ const LaporanPedagangs = db.define('sis_laporan', {
   kabkota_id: {
     type: DataTypes.INTEGER
   },
+  createdby: {
+    type: DataTypes.INTEGER
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
