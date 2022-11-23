@@ -31,6 +31,7 @@ export const getUsers = async(req, res) =>{
                 [Op.like]: '%'+search+'%'
             }}]
         }
+
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Users.findAll({
@@ -363,6 +364,7 @@ export const UserCreate = async (req, res) => {
                 role_id: req.body.role_id,
                 kabkota_id : req.body.kabkota_id,
                 kategori_enumerator : req.body.kategori_enumerator,
+                komoditas : req.body.komoditas,
                 is_active : 1,
                 createdAt: datetime,
                 updatedAt: datetime
@@ -403,6 +405,7 @@ export const UserUpdate = async (req, res) => {
                 role_id: req.body.role_id,
                 kabkota_id : req.body.kabkota_id,
                 kategori_enumerator : req.body.kategori_enumerator,
+                komditas : req.body.komditas,
                 updatedAt: datetime
                 // created_by: req.body.created_by
             },{
