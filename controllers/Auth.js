@@ -32,6 +32,7 @@ export const loginUser = async (req, res) => {
                     email  : user[0]['email'],
                     role : user[0]['role_id'],
                     kabkota_id : user[0]['kabkota_id'],
+                    komoditas : user[0]['komoditas'],
                     nama_lengkap : user[0]['nama_lengkap'],
                     kategori_enumerator : user[0]['kategori_enumerator'],
                     id_token : id_token
