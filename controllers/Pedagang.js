@@ -9,6 +9,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const getPedagang = async(req, res) =>{
+
+    
+
      Pedagangs.belongsTo(Kabkotas, {
         targetKey:'id',
         foreignKey: 'kabkota_id'
@@ -33,13 +36,30 @@ export const getPedagang = async(req, res) =>{
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await Pedagangs.count({
-        where:{
+
+    var whereClause;
+
+    if (req.query.kabkota_id != '' ) {
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
             }}]
-        }
+        };
+    }else{
+
+        whereClause = {
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };
+
+    }
+    
+    const totalRows = await Pedagangs.count({
+        where:whereClause
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Pedagangs.findAll({
@@ -62,12 +82,7 @@ export const getPedagang = async(req, res) =>{
         }
         ],
 
-        where:{
-            deletedAt: null,
-            [Op.or]: [{nama:{
-                [Op.like]: '%'+search+'%'
-            }}]
-        },
+        where:whereClause,
         
         attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
