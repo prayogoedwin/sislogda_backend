@@ -9,17 +9,17 @@ dotenv.config();
 
 export const getLaporanPedagang = async(req, res) =>{
 
-    LaporanPedagangs.belongsTo(Kabkotas, {
-        targetKey:'id',
-        foreignKey: 'berasal_dari',
-        as: 'berasal_dari_'
-    });
+    // LaporanPedagangs.belongsTo(Kabkotas, {
+    //     targetKey:'id',
+    //     foreignKey: 'berasal_dari',
+    //     as: 'berasal_dari_'
+    // });
 
-    LaporanPedagangs.belongsTo(Kabkotas2, {
-        targetKey:'id',
-        foreignKey: 'dijual_ke',
-        as: 'dijual_ke_'
-    });
+    // LaporanPedagangs.belongsTo(Kabkotas2, {
+    //     targetKey:'id',
+    //     foreignKey: 'dijual_ke',
+    //     as: 'dijual_ke_'
+    // });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
@@ -36,18 +36,18 @@ export const getLaporanPedagang = async(req, res) =>{
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await LaporanPedagangs.findAll({
-        include: [
-            {
-                model: Kabkotas,
-                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                as: 'berasal_dari_'
-            },
-            {
-                model: Kabkotas2,
-                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                as: 'dijual_ke_'
-            }
-            ],
+        // include: [
+        //     {
+        //         model: Kabkotas,
+        //         attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+        //         as: 'berasal_dari_'
+        //     },
+        //     {
+        //         model: Kabkotas2,
+        //         attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+        //         as: 'dijual_ke_'
+        //     }
+        //     ],
     
         where:{
             kategori_laporan: '2',
@@ -57,7 +57,7 @@ export const getLaporanPedagang = async(req, res) =>{
             }}]
         },
         
-        attributes: { exclude: ['updatedAt', 'deletedAt', 'berasal_dari', 'dijual_ke'] },
+        attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
         limit: limit,
         order:[
