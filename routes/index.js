@@ -68,6 +68,7 @@ import {
 
 import { 
    getPedagang,
+   getPedagangCount,
    getPedagangAll,
    PedagangCreate,
    getPedagangDetail,
@@ -98,6 +99,11 @@ import {
    LaporanPedagangCreate
 } from "../controllers/LaporanPedagang.js";
 
+
+import { 
+   getPerforma
+} from "../controllers/PerformaPedagang.js";
+
 import {
    getKabkotas,
    getKabKotasByProv,
@@ -119,17 +125,17 @@ import {
 const router = express.Router();
 router.use(cors());
 
-const doLogger = function async(req, res, next) {
-   LogCreate()
-   next()
-}
+// const doLogger = function async(req, res, next) {
+//    LogCreate()
+//    next()
+// }
   
           
       
 
 
 
-router.use(doLogger);
+// router.use(doLogger);
 
 // Route get semua users
 // router.get('/users', getUsers);
@@ -201,12 +207,13 @@ router.post('/api/distributor/edit', DistributorUpdate);
 router.post('/api/distributor/delete', DistributorDelete);
 
 //pedagang crud
-router.get('/api/Pedagang', getPedagang);
-router.get('/api/Pedagang/all', getPedagangAll);
-router.post('/api/Pedagang/add', PedagangCreate);
-router.post('/api/Pedagang/detail', getPedagangDetail);
-router.post('/api/Pedagang/edit', PedagangUpdate);
-router.post('/api/Pedagang/delete', PedagangDelete);
+router.get('/api/pedagang', getPedagang);
+router.get('/api/pedagang/all', getPedagangAll);
+router.post('/api/pedagang/add', PedagangCreate);
+router.post('/api/pedagang/detail', getPedagangDetail);
+router.post('/api/pedagang/count', getPedagangCount);
+router.post('/api/pedagang/edit', PedagangUpdate);
+router.post('/api/pedagang/delete', PedagangDelete);
 
 
 //produsen crud
@@ -229,6 +236,10 @@ router.post('/api/koperasi/delete', KoperasiDelete);
 //laporan pedagang crud
 router.get('/api/laporanpedagang', getLaporanPedagang);
 router.post('/api/laporanpedagang/add', LaporanPedagangCreate);
+
+
+//performa pedagang crud
+router.get('/api/performapedagang', getPerforma);
 
 
 export default router;

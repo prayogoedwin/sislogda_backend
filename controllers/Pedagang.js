@@ -10,8 +10,6 @@ dotenv.config();
 
 export const getPedagang = async(req, res) =>{
 
-    
-
      Pedagangs.belongsTo(Kabkotas, {
         targetKey:'id',
         foreignKey: 'kabkota_id'
@@ -247,6 +245,51 @@ export const getPedagangDetail = async (req, res) => {
             'status' : 0,
             // 'message': err['errors'][0]['message']
             'message': 'Error'
+        });
+    }
+}
+
+// Get detail pedagang
+export const getPedagangCount = async (req, res) => {
+    try {
+        const pedagang = await Pedagangs.count({
+            where: {
+                komoditas: req.body.komoditas,
+                deletedAt: null
+            }
+        });
+
+        if(pedagang){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : pedagang,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : pedagang,
+            });
+
+        }
+        
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': err['errors'][0]['message']
+            // 'message': 'Error'
         });
     }
 }
