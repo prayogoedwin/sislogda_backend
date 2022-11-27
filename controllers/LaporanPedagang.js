@@ -26,7 +26,16 @@ export const getLaporanPedagang = async(req, res) =>{
 
     var whereClause;
 
-    if (req.query.kabkota_id != '' ) {
+    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+
+        var x = req.query.komoditas
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            komoditas: req.query.komoditas,
+            role_id: "4",
+            deletedAt: null,
+        };
+    }else if (req.query.kabkota_id != '' ) {
         whereClause = {
             kabkota_id: req.query.kabkota_id,
             deletedAt: null,
