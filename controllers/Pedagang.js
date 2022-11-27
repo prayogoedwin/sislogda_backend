@@ -266,7 +266,7 @@ export const getPedagangCount = async (req, res) => {
                 'status' : 1,
                 'message': 'Data berhasil ditemukan',
                 // 'data': Penggilingan[0]['name'],
-                'data' : pedagang,
+                'hasil' : pedagang,
             });
 
         }else{
@@ -276,7 +276,7 @@ export const getPedagangCount = async (req, res) => {
                 'status' : 1,
                 'message': 'Data Tidak Ditemukan',
                 // 'data': Penggilingan[0]['name'],
-                'data' : pedagang,
+                'hasil' : pedagang,
             });
 
         }
