@@ -361,7 +361,7 @@ export const UserCreate = async (req, res) => {
         }
     });
 
-    if(create){
+    if(create > 0){
 
         res.statusCode = 200;
             res.json({
@@ -373,6 +373,12 @@ export const UserCreate = async (req, res) => {
 
     }else{
 
+        let ke;
+        let ko;
+
+        if(!req.body.kategori_enumerator){ ke = 0 }else{ ke = req.body.kategori_enumerator }
+        if(!req.body.komoditas){ ko = 0 }else{ ke = req.body.komoditas }
+
         try {
             // var p = req.body.pass;
             let hashedpass = bcrypt.hashSync(req.body.password, 10);
@@ -383,8 +389,8 @@ export const UserCreate = async (req, res) => {
                     password: hashedpass,
                     role_id: req.body.role_id,
                     kabkota_id : req.body.kabkota_id,
-                    kategori_enumerator : req.body.kategori_enumerator,
-                    komoditas : req.body.komoditas,
+                    kategori_enumerator : ke,
+                    komoditas : ko,
                     is_active : 1,
                     createdAt: datetime,
                     updatedAt: datetime
