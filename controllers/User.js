@@ -377,7 +377,7 @@ export const UserCreate = async (req, res) => {
         let ko;
 
         if(!req.body.kategori_enumerator){ ke = 0 }else{ ke = req.body.kategori_enumerator }
-        if(!req.body.komoditas){ ko = 0 }else{ ke = req.body.komoditas }
+        if(!req.body.komoditas){ ko = 0 }else{ ko = req.body.komoditas }
 
         try {
             // var p = req.body.pass;
