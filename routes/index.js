@@ -104,6 +104,11 @@ import {
    getPerforma
 } from "../controllers/PerformaPedagang.js";
 
+import { 
+   getKondisiProduksi,
+   createKondisiProduksi,
+} from "../controllers/KondisiPangan.js";
+
 import {
    getKabkotas,
    getKabKotasByProv,
@@ -240,6 +245,10 @@ router.post('/api/laporanpedagang/add', LaporanPedagangCreate);
 
 //performa pedagang crud
 router.get('/api/performapedagang', getPerforma);
+
+//kondisi pangan crud
+router.get('/api/kondisiproduksi', getKondisiProduksi);
+router.post('/api/kondisiproduksi/add', createKondisiProduksi);
 
 
 export default router;

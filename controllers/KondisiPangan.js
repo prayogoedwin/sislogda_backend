@@ -1,83 +1,77 @@
 // Import model Product
-import LaporanPedagangs from "../models/LaporanPedagangModel.js";
+import KondisiPangans from "../models/KondisiPanganModel.js";
+import Kabkotas from "../models/KabkotaModel.js";
+import Komoditass from "../models/KomoditasModel.js";
+// import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getLaporanPedagang = async(req, res) =>{
+export const getKondisiProduksi = async(req, res) =>{
+    KondisiPangans.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id'
+     });
 
-    // LaporanPedagangs.belongsTo(Kabkotas, {
-    //     targetKey:'id',
-    //     foreignKey: 'berasal_dari',
-    //     as: 'berasal_dari_'
-    // });
-
-    // LaporanPedagangs.belongsTo(Kabkotas2, {
-    //     targetKey:'id',
-    //     foreignKey: 'dijual_ke',
-    //     as: 'dijual_ke_'
-    // });
-
-    // LaporanPedagangs.belongsTo(Users, {
-    //     targetKey:'id',
-    //     foreignKey: 'createdby',
-    // });
+     KondisiPangans.belongsTo(Komoditass, {
+        targetKey:'id',
+        foreignKey: 'komoditas'
+     });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-
     var whereClause;
 
     if (req.query.kabkota_id != '' && req.query.komoditas != '') {
-
         whereClause = {
+            jenis_laporan : 1,
             kabkota_id: req.query.kabkota_id,
             komoditas: req.query.komoditas,
+            tahun: req.query.tahun,
+            bulan: req.query.bulan,
             deletedAt: null,
         };
+    }else if(req.query.kabkota_id != '' ){
 
-    }else if (req.query.kabkota_id != '' ) {
         whereClause = {
+            jenis_laporan : 1,
             kabkota_id: req.query.kabkota_id,
+            tahun: req.query.tahun,
+            bulan: req.query.bulan,
             deletedAt: null,
-        };
+        };   
+
     }else{
 
         whereClause = {
-            deletedAt: null
+            jenis_laporan : 1,
+            tahun: req.query.tahun,
+            bulan: req.query.bulan,
+            deletedAt: null,
         };
 
     }
-
-    const totalRows = await LaporanPedagangs.count({
+    
+    const totalRows = await KondisiPangans.count({
         where:whereClause
     }); 
     const totalPage = Math.ceil(totalRows / limit);
-    const result = await LaporanPedagangs.findAll({
+    const result = await KondisiPangans.findAll({
         include: [
-            // {
-            //     model: Kabkotas,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // },
-            // {
-            //     model: Komoditass,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // }, 
-    
-            // {
-            //     model: KategoriEnum,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // },
-            // {
-            //     model: Users,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // },
+        {
+            model: Kabkotas,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+            model: Komoditass,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        }
         ],
-    
+
         where:whereClause,
         
-        attributes: { exclude: ['updatedAt', 'deletedAt'] },
+        attributes: { exclude: ['updatedAt', 'deletedAt', 'luas_tanam', 'luas_panen', 'luas_puso', 'stok'] },
         offset: offset,
         limit: limit,
         order:[
@@ -108,32 +102,23 @@ export const getLaporanPedagang = async(req, res) =>{
             'data' : Array()
         });
 
-    }
-    
+    }    
 }
 
-// Add pedagang
-export const LaporanPedagangCreate = async (req, res) => {
+// Add kondisi produksi
+export const createKondisiProduksi = async (req, res) => {
     var datetime = new Date();
     try {
         // var p = req.body.pass;
-        const pedagangLap = await LaporanPedagangs.create(
+        const produksi = await KondisiPangans.create(
             {
-				tahun: req.body.tahun,
-                bulan: req.body.bulan,
-				minggu: req.body.minggu,
-                kategori_laporan: 2,
-                data_dari : req.body.data_dari,
-                total_produksi : req.body.total_produksi,
-                stok : req.body.stok,
-                stok_curve : req.body.stok_curve,
-                harga_jual : req.body.harga_jual,
-                harga_beli : req.body.harga_beli,
-                berasal_dari : req.body.berasal_dari,
-                dijual_ke : req.body.dijual_ke,
-                createdby : req.body.createdby,
+				jenis_laporan: 1,
+                tahun: req.body.tahun,
+				bulan: req.body.bulan,
+                komoditas: req.body.komoditas,
                 kabkota_id : req.body.kabkota_id,
-                komoditas : req.body.komoditas,
+                total_produksi : req.body.total_produksi,
+                createdby : req.body.createdby,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -143,7 +128,7 @@ export const LaporanPedagangCreate = async (req, res) => {
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
             // 'data': Pedagang[0]['name'],
-            'data' : pedagangLap,
+            'data' : produksi,
         });
 
         
@@ -158,3 +143,4 @@ export const LaporanPedagangCreate = async (req, res) => {
         });
     }
 }
+
