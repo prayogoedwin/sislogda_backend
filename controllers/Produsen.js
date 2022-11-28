@@ -33,13 +33,41 @@ export const getProdusen = async(req, res) =>{
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await Produsens.count({
-        where:{
+
+    var whereClause;
+
+    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            komoditas: req.query.komoditas,
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
             }}]
-        }
+        };
+    }else if(req.query.kabkota_id != '' ){
+
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };   
+    }else{
+
+        whereClause = {
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };
+
+    }
+    
+    const totalRows = await Produsens.count({
+        where:whereClause
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Produsens.findAll({
