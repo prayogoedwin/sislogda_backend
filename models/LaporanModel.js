@@ -7,7 +7,7 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
  
 // Define schema
-const LaporanPedagangs = db.define('sis_laporan', {
+const Laporans = db.define('sis_laporan', {
   // Define attributes
   id: {
     type: DataTypes.INTEGER,
@@ -83,4 +83,4 @@ const LaporanPedagangs = db.define('sis_laporan', {
 });
  
 // Export model Product
-export default LaporanPedagangs;
+export default Laporans;

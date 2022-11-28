@@ -2,8 +2,8 @@ import Users from "../models/UserModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
 import Komoditass from "../models/KomoditasModel.js";
 import KategoriEnum from "../models/KategoriEnumModel.js";
-import LaporanPedagangs from "../models/LaporanPedagangModel.js";
-import Pedagangs from "../models/PedagangModel.js";
+import Laporans from "../models/LaporanModel.js";
+// import Pedagangs from "../models/PedagangModel.js";
 import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
@@ -26,7 +26,7 @@ export const getPerforma = async(req, res) =>{
         foreignKey: 'kategori_enumerator',
     });
     
-    Users.hasMany(LaporanPedagangs, {
+    Users.hasMany(Laporans, {
         targetKey:'id',
         foreignKey: 'createdby',
     });
@@ -104,7 +104,7 @@ export const getPerforma = async(req, res) =>{
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         },
         {
-            model: LaporanPedagangs,
+            model: Laporans,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         },
         // {

@@ -3,7 +3,7 @@ import Laporans from "../models/LaporanModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getLaporanPedagang = async(req, res) =>{
+export const getLaporanProdusen = async(req, res) =>{
 
     // Laporans.belongsTo(Kabkotas, {
     //     targetKey:'id',
@@ -34,20 +34,20 @@ export const getLaporanPedagang = async(req, res) =>{
         whereClause = {
             kabkota_id: req.query.kabkota_id,
             komoditas: req.query.komoditas,
-            kategori_laporan: 2,
+            kategori_laporan: 1,
             deletedAt: null,
         };
 
     }else if (req.query.kabkota_id != '' ) {
         whereClause = {
             kabkota_id: req.query.kabkota_id,
-            kategori_laporan: 2,
+            kategori_laporan: 1,
             deletedAt: null,
         };
     }else{
 
         whereClause = {
-            kategori_laporan: 2,
+            kategori_laporan: 1,
             deletedAt: null
         };
 
@@ -115,17 +115,17 @@ export const getLaporanPedagang = async(req, res) =>{
     
 }
 
-// Add pedagang
-export const LaporanPedagangCreate = async (req, res) => {
+// Add Produsen
+export const LaporanProdusenCreate = async (req, res) => {
     var datetime = new Date();
     try {
         // var p = req.body.pass;
-        const pedagangLap = await Laporans.create(
+        const produsenLap = await Laporans.create(
             {
 				tahun: req.body.tahun,
                 bulan: req.body.bulan,
 				minggu: req.body.minggu,
-                kategori_laporan: 2,
+                kategori_laporan: 1,
                 data_dari : req.body.data_dari,
                 total_produksi : req.body.total_produksi,
                 stok : req.body.stok,
@@ -145,8 +145,8 @@ export const LaporanPedagangCreate = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
-            // 'data': Pedagang[0]['name'],
-            'data' : pedagangLap,
+            // 'data': Produsen[0]['name'],
+            'data' : produsenLap,
         });
 
         

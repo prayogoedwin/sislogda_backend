@@ -99,6 +99,11 @@ import {
    LaporanPedagangCreate
 } from "../controllers/LaporanPedagang.js";
 
+import { 
+   getLaporanProdusen,
+   LaporanProdusenCreate
+} from "../controllers/LaporanProdusen.js";
+
 
 import { 
    getPerforma
@@ -241,6 +246,10 @@ router.post('/api/koperasi/delete', KoperasiDelete);
 //laporan pedagang crud
 router.get('/api/laporanpedagang', getLaporanPedagang);
 router.post('/api/laporanpedagang/add', LaporanPedagangCreate);
+
+//laporan produsen crud
+router.get('/api/laporanprodusen', getLaporanProdusen);
+router.post('/api/laporanprodusen/add', LaporanProdusenCreate);
 
 
 //performa pedagang crud
