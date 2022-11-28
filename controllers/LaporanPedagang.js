@@ -1,7 +1,8 @@
 // Import model Product
+import Users from "../models/UserModel.js";
 import LaporanPedagangs from "../models/LaporanPedagangModel.js";
 
-import {Op} from "sequelize";
+import {Sequelize, Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -19,6 +20,11 @@ export const getLaporanPedagang = async(req, res) =>{
     //     as: 'dijual_ke_'
     // });
 
+    // LaporanPedagangs.belongsTo(Users, {
+    //     targetKey:'id',
+    //     foreignKey: 'createdby',
+    // });
+
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
@@ -28,13 +34,12 @@ export const getLaporanPedagang = async(req, res) =>{
 
     if (req.query.kabkota_id != '' && req.query.komoditas != '') {
 
-        var x = req.query.komoditas
         whereClause = {
             kabkota_id: req.query.kabkota_id,
             komoditas: req.query.komoditas,
-            role_id: "4",
             deletedAt: null,
         };
+
     }else if (req.query.kabkota_id != '' ) {
         whereClause = {
             kabkota_id: req.query.kabkota_id,
@@ -53,18 +58,25 @@ export const getLaporanPedagang = async(req, res) =>{
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await LaporanPedagangs.findAll({
-        // include: [
-        //     {
-        //         model: Kabkotas,
-        //         attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-        //         as: 'berasal_dari_'
-        //     },
-        //     {
-        //         model: Kabkotas2,
-        //         attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-        //         as: 'dijual_ke_'
-        //     }
-        //     ],
+        include: [
+            // {
+            //     model: Kabkotas,
+            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            // },
+            // {
+            //     model: Komoditass,
+            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            // }, 
+    
+            // {
+            //     model: KategoriEnum,
+            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            // },
+            // {
+            //     model: Users,
+            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            // },
+        ],
     
         where:whereClause,
         

@@ -8,9 +8,7 @@ import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-const generateRefreshToken = async (payload) => {
-    return jwt.sign({payload}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION_TIME});
-}
+
 
 export const getPerforma = async(req, res) =>{
     Users.belongsTo(Kabkotas, {
@@ -33,6 +31,10 @@ export const getPerforma = async(req, res) =>{
         foreignKey: 'createdby',
     });
 
+    // Users.belongsTo(Pedagangs, {
+    //     targetKey:'komoditas',
+    //     foreignKey: 'komoditas',
+    // });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
@@ -69,6 +71,7 @@ export const getPerforma = async(req, res) =>{
 
     }
 
+    
 
     const totalRows = await Users.count({
        
@@ -103,7 +106,11 @@ export const getPerforma = async(req, res) =>{
         {
             model: LaporanPedagangs,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        }
+        },
+        // {
+        //     model: Pedagangs,
+        //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        // }
         ],
 
         where: whereClause,
@@ -125,6 +132,7 @@ export const getPerforma = async(req, res) =>{
         ]
     });
 
+
     if(result.length > 0){
 
         res.statusCode = 200;
@@ -135,7 +143,7 @@ export const getPerforma = async(req, res) =>{
             'totalRows' : totalRows,
             'totalPage' : totalPage,
             'page' : page,
-            'data' : result,
+            'data' : result
             
         });
 
