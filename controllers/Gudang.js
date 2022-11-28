@@ -189,6 +189,8 @@ export const GudangCreate = async (req, res) => {
                 kabkota_id: req.body.kabkota_id,
                 alamat: req.body.alamat,
                 kapasitas : req.body.kapasitas,
+                lat : req.body.lat,
+                lng : req.body.lng,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -224,6 +226,8 @@ export const GudangUpdate = async (req, res) => {
             kabkota_id: req.body.kabkota_id,
             alamat: req.body.alamat,
             kapasitas : req.body.kapasitas,
+            lat : req.body.lat,
+            lng : req.body.lng,
             updatedAt: datetime
         },{
             where:{

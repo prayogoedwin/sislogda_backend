@@ -37,6 +37,12 @@ const Produsens = db.define('sis_produsen', {
   nomor: {
     type: DataTypes.STRING
   },
+  lat: {
+    type: DataTypes.STRING
+  },
+  lng: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

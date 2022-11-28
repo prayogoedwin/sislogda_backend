@@ -28,6 +28,12 @@ const Gudangs = db.define('sis_gudang', {
   alamat: {
     type: DataTypes.STRING
   },
+  lat: {
+    type: DataTypes.STRING
+  },
+  lng: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

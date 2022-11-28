@@ -37,6 +37,12 @@ const Penggilingans = db.define('sis_penggilingan', {
   lokasi: {
     type: DataTypes.INTEGER
   },
+  lat: {
+    type: DataTypes.STRING
+  },
+  lng: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

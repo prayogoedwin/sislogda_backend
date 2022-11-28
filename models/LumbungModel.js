@@ -34,6 +34,12 @@ const Lumbungs = db.define('sis_lumbung', {
   tipe: {
     type: DataTypes.INTEGER
   },
+  lat: {
+    type: DataTypes.STRING
+  },
+  lng: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

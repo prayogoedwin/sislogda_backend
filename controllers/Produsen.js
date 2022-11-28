@@ -239,6 +239,8 @@ export const ProdusenCreate = async (req, res) => {
                 alamat : req.body.alamat,
                 komoditas : req.body.komoditas,
                 nomor : req.body.nomor,
+                lat : req.body.lat,
+                lng : req.body.lng,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -277,6 +279,8 @@ export const ProdusenUpdate = async (req, res) => {
                 alamat : req.body.alamat,
                 komoditas : req.body.komoditas,
                 nomor : req.body.nomor,
+                lat : req.body.lat,
+                lng : req.body.lng,
                 updatedAt: datetime
         },{
             where:{

@@ -230,6 +230,8 @@ export const LumbungCreate = async (req, res) => {
                 kelurahan_id: req.body.kelurahan_id,
                 kapasitas : req.body.kapasitas,
                 tipe : req.body.tipe,
+                lat : req.body.lat,
+                lng : req.body.lng,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -267,6 +269,8 @@ export const LumbungUpdate = async (req, res) => {
             kelurahan_id: req.body.kelurahan_id,
             kapasitas : req.body.kapasitas,
             tipe : req.body.tipe,
+            lat : req.body.lat,
+            lng : req.body.lng,
             updatedAt: datetime
         },{
             where:{
