@@ -34,20 +34,20 @@ export const getLaporanPedagang = async(req, res) =>{
         whereClause = {
             kabkota_id: req.query.kabkota_id,
             komoditas: req.query.komoditas,
-            kategori_laporan: 2,
+            kategori_laporan: "2",
             deletedAt: null,
         };
 
     }else if (req.query.kabkota_id != '' ) {
         whereClause = {
             kabkota_id: req.query.kabkota_id,
-            kategori_laporan: 2,
+            kategori_laporan: "2",
             deletedAt: null,
         };
     }else{
 
         whereClause = {
-            kategori_laporan: 2,
+            kategori_laporan: "2",
             deletedAt: null
         };
 
