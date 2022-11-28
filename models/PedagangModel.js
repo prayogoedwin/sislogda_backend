@@ -37,6 +37,12 @@ const Pedagangs = db.define('sis_pedagang', {
   nomor: {
     type: DataTypes.STRING
   },
+  lat: {
+    type: DataTypes.STRING
+  },
+  lng: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
