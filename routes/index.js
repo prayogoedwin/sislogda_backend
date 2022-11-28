@@ -104,6 +104,11 @@ import {
    LaporanProdusenCreate
 } from "../controllers/LaporanProdusen.js";
 
+import { 
+   getLaporanPenggilingan,
+   LaporanPenggilinganCreate
+} from "../controllers/LaporanPenggilingan.js";
+
 
 import { 
    getPerforma
@@ -112,6 +117,7 @@ import {
 import { 
    getKondisiProduksi,
    createKondisiProduksi,
+   createBulkKondisiProduksi
 } from "../controllers/KondisiPangan.js";
 
 import {
@@ -251,6 +257,10 @@ router.post('/api/laporanpedagang/add', LaporanPedagangCreate);
 router.get('/api/laporanprodusen', getLaporanProdusen);
 router.post('/api/laporanprodusen/add', LaporanProdusenCreate);
 
+//laporan penggilingan crud
+router.get('/api/laporanpenggilingan', getLaporanPenggilingan);
+router.post('/api/laporanpenggilingan/add', LaporanPenggilinganCreate);
+
 
 //performa pedagang crud
 router.get('/api/performapedagang', getPerforma);
@@ -258,6 +268,8 @@ router.get('/api/performapedagang', getPerforma);
 //kondisi pangan crud
 router.get('/api/kondisiproduksi', getKondisiProduksi);
 router.post('/api/kondisiproduksi/add', createKondisiProduksi);
+router.post('/api/kondisiproduksi/add_bulk', createBulkKondisiProduksi);
+
 
 
 export default router;

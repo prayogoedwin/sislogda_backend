@@ -144,3 +144,44 @@ export const createKondisiProduksi = async (req, res) => {
     }
 }
 
+
+// Add kondisi produksi
+export const createBulkKondisiProduksi = async (req, res) => {
+    var datetime = new Date();
+    try {
+        const p = req.body;
+        // const produksi = await KondisiPangans.create(
+        //     {
+		// 		jenis_laporan: 1,
+        //         tahun: req.body.tahun,
+		// 		bulan: req.body.bulan,
+        //         komoditas: req.body.komoditas,
+        //         kabkota_id : req.body.kabkota_id,
+        //         total_produksi : req.body.total_produksi,
+        //         createdby : req.body.createdby,
+        //         createdAt: datetime,
+        //         updatedAt: datetime
+        //     });
+        const produksi = await KondisiPangans.bulkCreate(p);
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil ditambahkan',
+            // 'data': Pedagang[0]['name'],
+            'data' : produksi,
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
