@@ -15,16 +15,41 @@ export const getGudang = async(req, res) =>{
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
-    const totalRows = await Gudangs.count({
-        where: {
-            deletedAt: null
-        },
-        where:{
+
+    var whereClause;
+
+    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            komoditas: req.query.komoditas,
             deletedAt: null,
             [Op.or]: [{nama:{
                 [Op.like]: '%'+search+'%'
             }}]
-        }
+        };
+    }else if(req.query.kabkota_id != '' ){
+
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };   
+    }else{
+
+        whereClause = {
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };
+
+    }
+
+    const totalRows = await Gudangs.count({
+        where: whereClause
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Gudangs.findAll({
@@ -35,12 +60,7 @@ export const getGudang = async(req, res) =>{
         }
         ],
 
-        where:{
-            deletedAt: null,
-            [Op.or]: [{nama:{
-                [Op.like]: '%'+search+'%'
-            }}]
-        },
+        where:whereClause,
         
         attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,

@@ -90,12 +90,7 @@ export const getProdusen = async(req, res) =>{
         }
         ],
 
-        where:{
-            deletedAt: null,
-            [Op.or]: [{nama:{
-                [Op.like]: '%'+search+'%'
-            }}]
-        },
+        where:whereClause,
         
         attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
