@@ -1,6 +1,7 @@
 // Import model Product
 import Gudangs from "../models/GudangModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
+import Komoditass from "../models/KomoditasModel.js";
 import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
@@ -9,6 +10,10 @@ export const getGudang = async(req, res) =>{
      Gudangs.belongsTo(Kabkotas, {
         targetKey:'id',
         foreignKey: 'kabkota_id'
+     });
+     Gudangs.belongsTo(Komoditass, {
+        targetKey:'id',
+        foreignKey: 'komoditas',
      });
 
     const page = parseInt(req.query.page) || 0;
@@ -56,6 +61,10 @@ export const getGudang = async(req, res) =>{
         include: [
         {
             model: Kabkotas,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+            model: Komoditass,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         }
         ],
@@ -211,6 +220,7 @@ export const GudangCreate = async (req, res) => {
                 kapasitas : req.body.kapasitas,
                 lat : req.body.lat,
                 lng : req.body.lng,
+                komoditas : req.body.komoditas,
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -248,6 +258,7 @@ export const GudangUpdate = async (req, res) => {
             kapasitas : req.body.kapasitas,
             lat : req.body.lat,
             lng : req.body.lng,
+            komoditas : req.body.komoditas,
             updatedAt: datetime
         },{
             where:{

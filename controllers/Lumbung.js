@@ -248,6 +248,7 @@ export const LumbungCreate = async (req, res) => {
                 tipe : req.body.tipe,
                 lat : req.body.lat,
                 lng : req.body.lng,
+                komoditas : "1",
                 createdAt: datetime,
                 updatedAt: datetime
             });
@@ -287,6 +288,7 @@ export const LumbungUpdate = async (req, res) => {
             tipe : req.body.tipe,
             lat : req.body.lat,
             lng : req.body.lng,
+            komoditas : "1",
             updatedAt: datetime
         },{
             where:{

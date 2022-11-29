@@ -251,6 +251,7 @@ export const PenggilinganCreate = async (req, res) => {
                 alamat: req.body.alamat,
                 kapasitas : req.body.kapasitas,
                 lokasi : req.body.lokasi,
+                komoditas : "1",
                 lat : req.body.lat,
                 lng : req.body.lng,
                 createdAt: datetime,
@@ -291,6 +292,7 @@ export const PenggilinganUpdate = async (req, res) => {
             alamat: req.body.alamat,
             kapasitas : req.body.kapasitas,
             lokasi : req.body.lokasi,
+            komoditas : "1",
             lat : req.body.lat,
             lng : req.body.lng,
             updatedAt: datetime
