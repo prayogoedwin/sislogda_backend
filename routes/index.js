@@ -118,6 +118,11 @@ import {
    getKondisiProduksi,
    createKondisiProduksi,
    createBulkKondisiProduksi,
+
+   getKondisiCpp,
+   createKondisiCpp,
+   createBulkKondisiCpp,
+
    getKondisi
 } from "../controllers/KondisiPangan.js";
 
@@ -266,10 +271,15 @@ router.post('/api/laporanpenggilingan/add', LaporanPenggilinganCreate);
 //performa pedagang crud
 router.get('/api/performapedagang', getPerforma);
 
-//kondisi pangan crud
+//kondisi pangan produksi crud
 router.get('/api/kondisiproduksi', getKondisiProduksi);
 router.post('/api/kondisiproduksi/add', createKondisiProduksi);
 router.post('/api/kondisiproduksi/add_bulk', createBulkKondisiProduksi);
+
+//kondisi pangan CPP crud
+router.get('/api/kondisicpp', getKondisiCpp);
+router.post('/api/kondisicpp/add', createKondisiCpp);
+router.post('/api/kondisicpp/add_bulk', createBulkKondisiCpp);
 
 // kondisi pangan dashboard
 router.post('/api/kondisidashboard', getKondisi);
