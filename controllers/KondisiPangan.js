@@ -6,6 +6,76 @@ import Komoditass from "../models/KomoditasModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
+// Get detail pedagang
+export const getKondisi = async (req, res) => {
+
+    KondisiPangans.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id'
+     });
+
+     KondisiPangans.belongsTo(Komoditass, {
+        targetKey:'id',
+        foreignKey: 'komoditas'
+     });
+
+    try {
+        const kondisi = await KondisiPangans.findAll({
+
+            include: [
+                {
+                    model: Kabkotas,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                },
+                {
+                    model: Komoditass,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                }
+                ],
+
+            where: {
+                kabkota_id : req.body.kabkota_id,
+                tahun: req.body.tahun,
+                bulan: req.body.bulan,
+                deletedAt: null
+            },
+            order: [
+                ['komoditas', 'ASC']
+            ],
+        });
+
+        if(kondisi){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : kondisi,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : kondisi,
+            });
+
+        }    
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': err
+            // 'message': 'Error'
+        });
+    }
+}
+
 export const getKondisiProduksi = async(req, res) =>{
     KondisiPangans.belongsTo(Kabkotas, {
         targetKey:'id',

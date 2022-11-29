@@ -117,7 +117,8 @@ import {
 import { 
    getKondisiProduksi,
    createKondisiProduksi,
-   createBulkKondisiProduksi
+   createBulkKondisiProduksi,
+   getKondisi
 } from "../controllers/KondisiPangan.js";
 
 import {
@@ -269,6 +270,9 @@ router.get('/api/performapedagang', getPerforma);
 router.get('/api/kondisiproduksi', getKondisiProduksi);
 router.post('/api/kondisiproduksi/add', createKondisiProduksi);
 router.post('/api/kondisiproduksi/add_bulk', createBulkKondisiProduksi);
+
+// kondisi pangan dashboard
+router.post('/api/kondisidashboard', getKondisi);
 
 
 
