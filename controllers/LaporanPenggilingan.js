@@ -1,6 +1,7 @@
 // Import model Product
 import Laporans from "../models/LaporanModel.js";
 import Penggilingans from "../models/PenggilinganModel.js";
+import Komoditass from "../models/KomoditasModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -9,6 +10,11 @@ export const getLaporanPenggilingan = async(req, res) =>{
     Laporans.belongsTo(Penggilingans, {
         targetKey:'id',
         foreignKey: 'data_dari'
+    });
+
+    Laporans.belongsTo(Komoditass, {
+        targetKey:'id',
+        foreignKey: 'komoditas'
     });
 
     // Laporans.belongsTo(Kabkotas, {
@@ -73,10 +79,10 @@ export const getLaporanPenggilingan = async(req, res) =>{
             //     model: Kabkotas,
             //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
             // },
-            // {
-            //     model: Komoditass,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // }, 
+            {
+                model: Komoditass,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            }, 
     
             // {
             //     model: KategoriEnum,
