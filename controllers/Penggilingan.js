@@ -3,6 +3,7 @@ import Penggilingans from "../models/PenggilinganModel.js";
 import Kabkotas from "../models/KabkotaModel.js";
 import Kecamatans from "../models/KecamatanModel.js";
 import Kelurahans from "../models/KelurahanModel.js";
+import Komoditass from "../models/KomoditasModel.js";
 import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
@@ -22,6 +23,11 @@ export const getPenggilingan = async(req, res) =>{
         targetKey:'id',
         foreignKey: 'kelurahan_id'
      });
+     
+     Penggilingans.belongsTo(Komoditass, {
+        targetKey:'id',
+        foreignKey: 'komoditas'
+    });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
@@ -77,7 +83,11 @@ export const getPenggilingan = async(req, res) =>{
         {
             model: Kelurahans,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        }
+        },
+        {
+            model: Komoditass,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        }, 
         ],
 
         where:whereClause,
