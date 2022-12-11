@@ -109,6 +109,11 @@ import {
    LaporanPenggilinganCreate
 } from "../controllers/LaporanPenggilingan.js";
 
+import { 
+   getLaporanLumbung,
+   LaporanLumbungCreate
+} from "../controllers/LaporanLumbung.js";
+
 
 import { 
    getPerforma
@@ -118,6 +123,10 @@ import {
    getKondisiProduksi,
    createKondisiProduksi,
    createBulkKondisiProduksi,
+
+   getKondisiLuas,
+   createKondisiLuas,
+   createBulkKondisiLuas,
 
    getKondisiCpp,
    createKondisiCpp,
@@ -267,6 +276,9 @@ router.post('/api/laporanprodusen/add', LaporanProdusenCreate);
 router.get('/api/laporanpenggilingan', getLaporanPenggilingan);
 router.post('/api/laporanpenggilingan/add', LaporanPenggilinganCreate);
 
+//laporan lumbung crud
+router.get('/api/laporanlumbung', getLaporanLumbung);
+router.post('/api/laporanlumbung/add', LaporanLumbungCreate);
 
 //performa pedagang crud
 router.get('/api/performapedagang', getPerforma);
@@ -275,6 +287,11 @@ router.get('/api/performapedagang', getPerforma);
 router.get('/api/kondisiproduksi', getKondisiProduksi);
 router.post('/api/kondisiproduksi/add', createKondisiProduksi);
 router.post('/api/kondisiproduksi/add_bulk', createBulkKondisiProduksi);
+
+//kondisi pangan CPP crud
+router.get('/api/kondisiluas', getKondisiLuas);
+router.post('/api/kondisiluas/add', createKondisiLuas);
+router.post('/api/kondisiluas/add_bulk', createBulkKondisiLuas);
 
 //kondisi pangan CPP crud
 router.get('/api/kondisicpp', getKondisiCpp);
