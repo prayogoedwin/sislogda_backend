@@ -1,9 +1,15 @@
 // Import model Product
 import Laporans from "../models/LaporanModel.js";
+import Pedagangs from "../models/PedagangModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 export const getLaporanPedagang = async(req, res) =>{
+
+    Laporans.belongsTo(Pedagangs, {
+        targetKey:'id',
+        foreignKey: 'data_dari'
+    });
 
     // Laporans.belongsTo(Kabkotas, {
     //     targetKey:'id',
@@ -59,6 +65,10 @@ export const getLaporanPedagang = async(req, res) =>{
     const totalPage = Math.ceil(totalRows / limit);
     const result = await Laporans.findAll({
         include: [
+            {
+                model: Pedagangs,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            },
             // {
             //     model: Kabkotas,
             //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
