@@ -2,6 +2,8 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 
+//Test
+
 export const loginUser = async (req, res) => {
     var datetime = new Date();
     try {
