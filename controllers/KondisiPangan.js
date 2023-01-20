@@ -793,7 +793,7 @@ export const createBulkKondisiKebutuhan = async (req, res) => {
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
             // 'data': Pedagang[0]['name'],
-            'data' : produksi,
+            'data' : kebutuhan,
         });
 
         
