@@ -93,7 +93,7 @@ export const getKondisiProduksi = async(req, res) =>{
     const offset = limit * page;
     var whereClause;
 
-    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+    if (req.query.kabkota_id != '' && req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != '') {
         whereClause = {
             jenis_laporan : 1,
             kabkota_id: req.query.kabkota_id,
@@ -102,7 +102,7 @@ export const getKondisiProduksi = async(req, res) =>{
             bulan: req.query.bulan,
             deletedAt: null,
         };
-    }else if(req.query.kabkota_id != '' ){
+    }else if(req.query.kabkota_id != '' && req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
             jenis_laporan : 1,
@@ -112,12 +112,29 @@ export const getKondisiProduksi = async(req, res) =>{
             deletedAt: null,
         };   
 
-    }else{
+    }else if(req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != ''){
+
+        whereClause = {
+            jenis_laporan : 1,
+            komoditas: req.query.komoditas,
+            tahun: req.query.tahun,
+            bulan: req.query.bulan,
+            deletedAt: null,
+        };   
+
+    }else if(req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
             jenis_laporan : 1,
             tahun: req.query.tahun,
             bulan: req.query.bulan,
+            deletedAt: null,
+        };   
+
+    }else{
+
+        whereClause = {
+            jenis_laporan : 1,
             deletedAt: null,
         };
 
@@ -272,7 +289,7 @@ export const getKondisiCpp = async(req, res) =>{
     const offset = limit * page;
     var whereClause;
 
-    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+    if (req.query.kabkota_id != '' && req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != '') {
         whereClause = {
             jenis_laporan : 3,
             kabkota_id: req.query.kabkota_id,
@@ -281,7 +298,7 @@ export const getKondisiCpp = async(req, res) =>{
             bulan: req.query.bulan,
             deletedAt: null,
         };
-    }else if(req.query.kabkota_id != '' ){
+    }else if(req.query.kabkota_id != '' && req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
             jenis_laporan : 3,
@@ -291,12 +308,29 @@ export const getKondisiCpp = async(req, res) =>{
             deletedAt: null,
         };   
 
-    }else{
+    }else if(req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != ''){
+
+        whereClause = {
+            jenis_laporan : 3,
+            komoditas: req.query.komoditas,
+            tahun: req.query.tahun,
+            bulan: req.query.bulan,
+            deletedAt: null,
+        };   
+
+    }else if(req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
             jenis_laporan : 3,
             tahun: req.query.tahun,
             bulan: req.query.bulan,
+            deletedAt: null,
+        };   
+
+    }else{
+
+        whereClause = {
+            jenis_laporan : 3,
             deletedAt: null,
         };
 
@@ -451,7 +485,7 @@ export const getKondisiLuas = async(req, res) =>{
     const offset = limit * page;
     var whereClause;
 
-    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+    if (req.query.kabkota_id != '' && req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != '') {
         whereClause = {
             jenis_laporan : 2,
             kabkota_id: req.query.kabkota_id,
@@ -460,7 +494,7 @@ export const getKondisiLuas = async(req, res) =>{
             bulan: req.query.bulan,
             deletedAt: null,
         };
-    }else if(req.query.kabkota_id != '' ){
+    }else if(req.query.kabkota_id != '' && req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
             jenis_laporan : 2,
@@ -470,12 +504,29 @@ export const getKondisiLuas = async(req, res) =>{
             deletedAt: null,
         };   
 
-    }else{
+    }else if(req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != ''){
+
+        whereClause = {
+            jenis_laporan : 2,
+            komoditas: req.query.komoditas,
+            tahun: req.query.tahun,
+            bulan: req.query.bulan,
+            deletedAt: null,
+        };   
+
+    }else if(req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
             jenis_laporan : 2,
             tahun: req.query.tahun,
             bulan: req.query.bulan,
+            deletedAt: null,
+        };   
+
+    }else{
+
+        whereClause = {
+            jenis_laporan : 2,
             deletedAt: null,
         };
 
@@ -633,7 +684,7 @@ export const getKondisiKebutuhan = async(req, res) =>{
 
     if (req.query.kabkota_id != '' && req.query.komoditas != '' && req.query.tahun != '' &&  req.query.bulan != '') {
         whereClause = {
-            jenis_laporan : 1,
+            jenis_laporan : 4,
             kabkota_id: req.query.kabkota_id,
             komoditas: req.query.komoditas,
             tahun: req.query.tahun,
