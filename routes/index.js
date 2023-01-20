@@ -132,6 +132,10 @@ import {
    createKondisiCpp,
    createBulkKondisiCpp,
 
+   getKondisiKebutuhan,
+   createKondisiKebutuhan,
+   createBulkKondisiKebutuhan,
+
    getKondisi
 } from "../controllers/KondisiPangan.js";
 
@@ -297,6 +301,11 @@ router.post('/api/kondisiluas/add_bulk', createBulkKondisiLuas);
 router.get('/api/kondisicpp', getKondisiCpp);
 router.post('/api/kondisicpp/add', createKondisiCpp);
 router.post('/api/kondisicpp/add_bulk', createBulkKondisiCpp);
+
+//kondisi pangan kebutuhan crud
+router.get('/api/kondisikebutuhan', getKondisiKebutuhan);
+router.post('/api/kondisikebutuhan/add', createKondisiKebutuhan);
+router.post('/api/kondisikebutuhan/add_bulk', createBulkKondisiKebutuhan);
 
 // kondisi pangan dashboard
 router.post('/api/kondisidashboard', getKondisi);
