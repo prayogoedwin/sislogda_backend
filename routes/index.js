@@ -143,11 +143,17 @@ import {
    getKabkotas,
    getKabKotasByProv,
 } from "../controllers/Kabkota.js"
+
  import {getKecamatan} from "../controllers/Kecamatan.js"
  import {getKelurahan} from "../controllers/Kelurahan.js"
 
  import {getKategoriEnum} from "../controllers/KategoriEnum.js"
  import {getKomoditas} from "../controllers/Komoditas.js"
+
+ import {
+   getProduksiKebutuhan,
+   getKetersediaanKebutuhan
+} from "../controllers/ChartFrontend.js"
 
 
  //for middleware
@@ -309,6 +315,11 @@ router.post('/api/kondisikebutuhan/add_bulk', createBulkKondisiKebutuhan);
 
 // kondisi pangan dashboard
 router.post('/api/kondisidashboard', getKondisi);
+
+// kondisi pangan dashboard
+router.get('/api/kondisiproduksikebutuhan', getProduksiKebutuhan);
+router.get('/api/kondisiketersediaankebutuhan', getKetersediaanKebutuhan);
+
 
 
 
