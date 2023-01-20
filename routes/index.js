@@ -159,6 +159,13 @@ import {
  //for middleware
  import {LogCreate} from "../middleware/Log.js"
 
+// import {Test} from "../controllers/HargaHarian.js"
+import {
+   ProdusenList,
+   GrosirList,
+   EceranList
+} from "../controllers/Harga.js"
+
 
 // import Logs from "../models/LogModel.js";
  
@@ -319,6 +326,11 @@ router.post('/api/kondisidashboard', getKondisi);
 // kondisi pangan dashboard
 router.get('/api/kondisiproduksikebutuhan', getProduksiKebutuhan);
 router.get('/api/kondisiketersediaankebutuhan', getKetersediaanKebutuhan);
+
+// router.get('/api/test', Test);
+router.get('/api/produsenlist', ProdusenList);
+router.get('/api/grosirlist', GrosirList);
+router.get('/api/eceranlist', EceranList);
 
 
 

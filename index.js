@@ -6,6 +6,7 @@ import cors from "cors";
 import db from "./config/Database.js";
 // Import router
 import Router from "./routes/index.js";
+
  
 // Init express
 const app = express();

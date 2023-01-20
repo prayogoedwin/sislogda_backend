@@ -19,12 +19,14 @@
   },
   "homepage": "https://bitbucket.org/prayogoedwin/backend#readme",
   "dependencies": {
+    "axios": "^1.2.3",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^3.3.0",
     "pg": "^8.8.0",
     "sequelize": "^6.21.6"
   }
