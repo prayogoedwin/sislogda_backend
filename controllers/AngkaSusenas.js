@@ -8,6 +8,11 @@ dotenv.config();
 
 // get angka susenas/
 export const getAngka = async(req, res) =>{
+    AngkaSusenas.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id'
+     });
+
      AngkaSusenas.belongsTo(Komoditass, {
         targetKey:'id',
         foreignKey: 'komoditas_id'
@@ -19,18 +24,20 @@ export const getAngka = async(req, res) =>{
     const offset = limit * page;
     var whereClause;
 
-    if (req.query.komoditas_id != '' && req.query.tahun != '' &&  req.query.triwulan != '') {
+    if (req.query.kabkota_id != '' && req.query.komoditas_id != '' && req.query.tahun != '' &&  req.query.triwulan != '') {
         whereClause = {
+            kabkota_id: req.query.kabkota_id,
             komoditas_id: req.query.komoditas_id,
             tahun: req.query.tahun,
             triwulan: req.query.triwulan,
             deletedAt: null,
         };
-    }else if(req.query.tahun != '' &&  req.query.triwulan != ''){
+    }else if(req.query.kabkota_id != '' && req.query.tahun != '' &&  req.query.bulan != ''){
 
         whereClause = {
+            kabkota_id: req.query.kabkota_id,
             tahun: req.query.tahun,
-            triwulan: req.query.triwulan,
+            bulan: req.query.bulan,
             deletedAt: null,
         };   
 
@@ -39,7 +46,7 @@ export const getAngka = async(req, res) =>{
         whereClause = {
             komoditas_id: req.query.komoditas_id,
             tahun: req.query.tahun,
-            bulan: req.query.triwulan,
+            triwulan: req.query.triwulan,
             deletedAt: null,
         };   
 
@@ -47,7 +54,7 @@ export const getAngka = async(req, res) =>{
 
         whereClause = {
             tahun: req.query.tahun,
-            bulan: req.query.triwulan,
+            triwulan: req.query.triwulan,
             deletedAt: null,
         };   
 
@@ -58,6 +65,7 @@ export const getAngka = async(req, res) =>{
         };
 
     }
+
     
     const totalRows = await AngkaSusenas.count({
         where:whereClause

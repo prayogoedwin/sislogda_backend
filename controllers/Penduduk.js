@@ -1,5 +1,6 @@
 // Import model Product
 import PendudukModel from "../models/PendudukModel.js";
+import Kabkotas from "../models/KabkotaModel.js";
 // import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
@@ -7,13 +8,33 @@ dotenv.config();
 // get angka susenas/
 export const getAngkap = async(req, res) =>{
 
+    PendudukModel.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id'
+     });
+
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
     var whereClause;
     
-    if(req.query.tahun != ''){
+    if(req.query.kabkota_id != '' && req.query.tahun != ''){
+
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            tahun: req.query.tahun,
+            deletedAt: null,
+        };   
+
+    } else if(req.query.kabkota_id != ''){
+
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            deletedAt: null,
+        };   
+
+    } else if(req.query.tahun != ''){
 
         whereClause = {
             tahun: req.query.tahun,
@@ -77,6 +98,7 @@ export const createAngkap = async (req, res) => {
             {
                 tahun: req.body.tahun,
                 jumlah : req.body.jumlah,
+                kabkota_id: req.body.kabkota_id,
                 createdby : req.body.createdby,
                 createdAt: datetime,
                 updatedAt: datetime
