@@ -6,7 +6,7 @@ import Komoditass from "../models/KomoditasModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Get detail pedagang
+// Get detail kondisi untuk maps
 export const getKondisi = async (req, res) => {
 
     KondisiPangans.belongsTo(Kabkotas, {

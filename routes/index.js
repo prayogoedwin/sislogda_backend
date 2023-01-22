@@ -166,7 +166,10 @@ import {
 
  import {
    getProduksiKebutuhan,
-   getKetersediaanKebutuhan
+   getKetersediaanKebutuhan,
+   getDetailMaps,
+   getPenduduk,
+   getDetailSusenas
 } from "../controllers/ChartFrontend.js"
 
 
@@ -193,9 +196,7 @@ router.use(cors());
 // }
   
           
-      
-
-
+   
 
 // router.use(doLogger);
 
@@ -340,6 +341,12 @@ router.post('/api/kondisidashboard', getKondisi);
 // kondisi pangan dashboard
 router.get('/api/kondisiproduksikebutuhan', getProduksiKebutuhan);
 router.get('/api/kondisiketersediaankebutuhan', getKetersediaanKebutuhan);
+router.get('/api/mapsdetail', getDetailMaps);
+router.get('/api/jmlpenduduk', getPenduduk);
+router.get('/api/susenas', getDetailSusenas);
+
+
+
 
 // router.get('/api/test', Test);
 router.get('/api/produsenlist', ProdusenList);
