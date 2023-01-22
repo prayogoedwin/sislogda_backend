@@ -114,26 +114,26 @@ export const getDetailMaps = async(req, res) =>{
 
     var currentTime = new Date()
 
-    if(req.query.kabkota_id == ''){
+    if(req.body.kabkota_id == ''){
         var kabkota_id = 0;
     }else{
-        var kabkota_id = req.query.kabkota_id;
+        var kabkota_id = req.body.kabkota_id;
     }
 
-    if(req.query.komoditas != ''){
-        var komoditas = req.query.komoditas;
+    if(req.body.komoditas != ''){
+        var komoditas = req.body.komoditas;
     }else{
         var komoditas = 1;
     }
 
-    if(req.query.tahun != ''){
-        var tahun = req.query.tahun;
+    if(req.body.tahun != ''){
+        var tahun = req.body.tahun;
     }else{
         var tahun = currentTime.getFullYear();
     }
 
-    if(req.query.bulan != ''){
-        var bulan = req.query.bulan;
+    if(req.body.bulan != ''){
+        var bulan = req.body.bulan;
     }else{
         var bulan = currentTime.getMonth() + 1;
     }

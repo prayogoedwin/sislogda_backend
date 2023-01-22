@@ -341,7 +341,7 @@ router.post('/api/kondisidashboard', getKondisi);
 // kondisi pangan dashboard
 router.get('/api/kondisiproduksikebutuhan', getProduksiKebutuhan);
 router.get('/api/kondisiketersediaankebutuhan', getKetersediaanKebutuhan);
-router.get('/api/mapsdetail', getDetailMaps);
+router.post('/api/mapsdetail', getDetailMaps);
 router.get('/api/jmlpenduduk', getPenduduk);
 router.get('/api/susenas', getDetailSusenas);
 
