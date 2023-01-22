@@ -31,6 +31,9 @@ const SusenasAngka = db.define('sis_angkasusenas_komoditas', {
   kabkota_id: {
     type: DataTypes.INTEGER
   },
+  createdby: {
+    type: DataTypes.INTEGER
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
