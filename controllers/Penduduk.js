@@ -7,6 +7,7 @@ dotenv.config();
 
 // get angka susenas/
 export const getAngkap = async(req, res) =>{
+    
 
     PendudukModel.belongsTo(Kabkotas, {
         targetKey:'id',
@@ -54,6 +55,12 @@ export const getAngkap = async(req, res) =>{
     }); 
     const totalPage = Math.ceil(totalRows / limit);
     const result = await PendudukModel.findAll({
+        include: [
+            {
+                model: Kabkotas,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            }
+            ],
         where:whereClause,
         attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
