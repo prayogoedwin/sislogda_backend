@@ -115,13 +115,7 @@ export const getDetailMaps = async(req, res) =>{
     var currentTime = new Date()
 
     if(req.query.kabkota_id == ''){
-        res.statusCode = 200;
-        res.json({
-            'status' : 0,
-            'message': 'Kabkota Harus Di Isi',
-            'data' : array(),
-        });
-        process.exit();
+        var kabkota_id = 0;
     }else{
         var kabkota_id = req.query.kabkota_id;
     }
