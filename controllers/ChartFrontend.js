@@ -215,10 +215,20 @@ export const getPenduduk = async(req, res) =>{
         var tahun = currentTime.getFullYear();
     }
 
+    // const query = `SELECT name as kabkota, 
+    // kabkota_id, tahun, jumlah  
+    // FROM sis_penduduk 
+    // INNER JOIN sis_kabkotas ON sis_kabkotas.id = sis_penduduk.kabkota_id  
+    // WHERE kabkota_id = ${kabkota_id} 
+    // AND tahun = ${tahun} 
+    // ORDER BY sis_penduduk.id DESC LIMIT 1`;
+
     const query = `SELECT name as kabkota, 
-    kabkota_id, tahun, jumlah  FROM sis_penduduk 
+    kabkota_id, tahun, jumlah  
+    FROM sis_penduduk 
     INNER JOIN sis_kabkotas ON sis_kabkotas.id = sis_penduduk.kabkota_id  
-    WHERE kabkota_id = ${kabkota_id} AND tahun = ${tahun} ORDER BY sis_penduduk.id DESC LIMIT 1`;
+    WHERE kabkota_id = ${kabkota_id} 
+    ORDER BY sis_penduduk.id DESC LIMIT 1`;
     const result = await db.query(query, 
         { 
           type: db.QueryTypes.SELECT 
@@ -277,15 +287,24 @@ export const getDetailSusenas = async(req, res) =>{
         var tahun = currentTime.getFullYear();
     }
 
+    // const query = `SELECT b.name as kabkota, 
+    // kabkota_id, komoditas_id,  c.name as komoditas, tahun, angka
+    // FROM sis_angkasusenas_komoditas a
+    // INNER JOIN sis_kabkotas b ON b.id = a.kabkota_id  
+    // INNER JOIN sis_komoditas c ON c.id = a.komoditas_id  
+    // WHERE kabkota_id = ${kabkota_id} 
+    // AND tahun = ${tahun}  
+    // AND komoditas_id = ${komoditas}  
+    // ORDER BY a.id DESC LIMIT 1`;
+
     const query = `SELECT b.name as kabkota, 
     kabkota_id, komoditas_id,  c.name as komoditas, tahun, angka
     FROM sis_angkasusenas_komoditas a
     INNER JOIN sis_kabkotas b ON b.id = a.kabkota_id  
     INNER JOIN sis_komoditas c ON c.id = a.komoditas_id  
     WHERE kabkota_id = ${kabkota_id} 
-    AND tahun = ${tahun}  
     AND komoditas_id = ${komoditas}  
-    ORDER BY a.id DESC LIMIT 1`
+    ORDER BY a.id DESC LIMIT 1`;
     
     const result = await db.query(query, 
         { 
