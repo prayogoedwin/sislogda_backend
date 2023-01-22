@@ -22,6 +22,9 @@ const PendudukAngka = db.define('sis_penduduk', {
   jumlah: {
     type: DataTypes.FLOAT
   },
+  kabkota_id: {
+    type: DataTypes.INTEGER
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
