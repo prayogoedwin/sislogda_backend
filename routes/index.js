@@ -139,6 +139,12 @@ import {
    getKondisi
 } from "../controllers/KondisiPangan.js";
 
+import { 
+   getAngka,
+   createAngka,
+   createBulkAngka,
+} from "../controllers/AngkaSusenas.js";
+
 import {
    getKabkotas,
    getKabKotasByProv,
@@ -331,6 +337,12 @@ router.get('/api/kondisiketersediaankebutuhan', getKetersediaanKebutuhan);
 router.get('/api/produsenlist', ProdusenList);
 router.get('/api/grosirlist', GrosirList);
 router.get('/api/eceranlist', EceranList);
+
+
+//angka susenas
+router.get('/api/angkasusenas', getAngka);
+router.post('/api/angkasusenas/add', createAngka);
+router.post('/api/angkasusenas/add_bulk', createBulkAngka);
 
 
 
