@@ -74,6 +74,10 @@ export const getAngka = async(req, res) =>{
     const result = await AngkaSusenas.findAll({
         include: [
         {
+            model: Kabkotas,
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
             model: Komoditass,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         }
