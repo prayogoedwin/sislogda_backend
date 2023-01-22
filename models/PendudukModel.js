@@ -7,7 +7,7 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
  
 // Define schema
-const SusenasAngka = db.define('sis_angkasusenas_komoditas', {
+const PendudukAngka = db.define('sis_penduduk', {
   // Define attributes
   id: {
     type: DataTypes.INTEGER,
@@ -19,14 +19,8 @@ const SusenasAngka = db.define('sis_angkasusenas_komoditas', {
   tahun: {
     type: DataTypes.INTEGER
   },
-  triwulan: {
-    type: DataTypes.INTEGER
-  },
-  angka: {
+  jumlah: {
     type: DataTypes.FLOAT
-  },
-  komoditas_id: {
-    type: DataTypes.INTEGER
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -50,4 +44,4 @@ const SusenasAngka = db.define('sis_angkasusenas_komoditas', {
 });
  
 // Export model Product
-export default SusenasAngka;
+export default PendudukAngka;

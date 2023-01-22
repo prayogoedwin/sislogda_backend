@@ -1,53 +1,22 @@
 // Import model Product
-import AngkaSusenas from "../models/AngkaSusenasModel.js";
-import Kabkotas from "../models/KabkotaModel.js";
-import Komoditass from "../models/KomoditasModel.js";
+import PendudukModel from "../models/PendudukModel.js";
 // import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
 // get angka susenas/
-export const getAngka = async(req, res) =>{
-     AngkaSusenas.belongsTo(Komoditass, {
-        targetKey:'id',
-        foreignKey: 'komoditas_id'
-     });
+export const getAngkap = async(req, res) =>{
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
     const search = req.query.search_query || "";
     const offset = limit * page;
     var whereClause;
-
-    if (req.query.komoditas_id != '' && req.query.tahun != '' &&  req.query.triwulan != '') {
-        whereClause = {
-            komoditas_id: req.query.komoditas_id,
-            tahun: req.query.tahun,
-            triwulan: req.query.triwulan,
-            deletedAt: null,
-        };
-    }else if(req.query.tahun != '' &&  req.query.triwulan != ''){
+    
+    if(req.query.tahun != ''){
 
         whereClause = {
             tahun: req.query.tahun,
-            triwulan: req.query.triwulan,
-            deletedAt: null,
-        };   
-
-    }else if(req.query.komoditas_id != '' && req.query.tahun != '' &&  req.query.triwulan != ''){
-
-        whereClause = {
-            komoditas_id: req.query.komoditas_id,
-            tahun: req.query.tahun,
-            bulan: req.query.triwulan,
-            deletedAt: null,
-        };   
-
-    }else if(req.query.tahun != '' &&  req.query.triwulan != ''){
-
-        whereClause = {
-            tahun: req.query.tahun,
-            bulan: req.query.triwulan,
             deletedAt: null,
         };   
 
@@ -59,20 +28,12 @@ export const getAngka = async(req, res) =>{
 
     }
     
-    const totalRows = await AngkaSusenas.count({
+    const totalRows = await PendudukModel.count({
         where:whereClause
     }); 
     const totalPage = Math.ceil(totalRows / limit);
-    const result = await AngkaSusenas.findAll({
-        include: [
-        {
-            model: Komoditass,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        }
-        ],
-
+    const result = await PendudukModel.findAll({
         where:whereClause,
-        
         attributes: { exclude: ['updatedAt', 'deletedAt'] },
         offset: offset,
         limit: limit,
@@ -108,16 +69,14 @@ export const getAngka = async(req, res) =>{
 }
 
 // Add angka susenas
-export const createAngka = async (req, res) => {
+export const createAngkap = async (req, res) => {
     var datetime = new Date();
     try {
         // var p = req.body.pass;
-        const produksi = await AngkaSusenas.create(
+        const produksi = await PendudukModel.create(
             {
                 tahun: req.body.tahun,
-				triwulan: req.body.triwulan,
-                komoditas_id: req.body.komoditas_id,
-                angka : req.body.angka,
+                jumlah : req.body.jumlah,
                 createdby : req.body.createdby,
                 createdAt: datetime,
                 updatedAt: datetime
@@ -145,7 +104,7 @@ export const createAngka = async (req, res) => {
 }
 
 // Add angka susenas
-export const createBulkAngka = async (req, res) => {
+export const createBulkAngkap = async (req, res) => {
     var datetime = new Date();
     try {
         const p = req.body;
@@ -161,7 +120,7 @@ export const createBulkAngka = async (req, res) => {
         //         createdAt: datetime,
         //         updatedAt: datetime
         //     });
-        const produksi = await AngkaSusenas.bulkCreate(p);
+        const produksi = await PendudukModel.bulkCreate(p);
 
         res.statusCode = 200;
         res.json({
@@ -185,10 +144,10 @@ export const createBulkAngka = async (req, res) => {
 }
 
 // Delete pedagang
-export const deleteAngka = async (req, res) => {
+export const deleteAngkap = async (req, res) => {
     var datetime = new Date();
     try {
-        const pedagang = await AngkaSusenas.update({deletedAt: datetime},{
+        const pedagang = await PendudukModel.update({deletedAt: datetime},{
             where:{
                 id: req.body.id
             }

@@ -143,7 +143,15 @@ import {
    getAngka,
    createAngka,
    createBulkAngka,
+   deleteAngka
 } from "../controllers/AngkaSusenas.js";
+
+import { 
+   getAngkap,
+   createAngkap,
+   createBulkAngkap,
+   deleteAngkap
+} from "../controllers/Penduduk.js";
 
 import {
    getKabkotas,
@@ -343,6 +351,14 @@ router.get('/api/eceranlist', EceranList);
 router.get('/api/angkasusenas', getAngka);
 router.post('/api/angkasusenas/add', createAngka);
 router.post('/api/angkasusenas/add_bulk', createBulkAngka);
+router.post('/api/angkasusenas/delete', deleteAngka);
+
+
+//jumlah penduduk
+router.get('/api/angkapenduduk', getAngkap);
+router.post('/api/angkapenduduk/add', createAngkap);
+router.post('/api/angkapenduduk/add_bulk', createBulkAngkap);
+router.post('/api/angkapenduduk/delete', deleteAngkap);
 
 
 
