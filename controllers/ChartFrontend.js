@@ -138,7 +138,19 @@ export const getDetailMaps = async(req, res) =>{
         var bulan = currentTime.getMonth() + 1;
     }
 
-    const query = `SELECT E.name as nama_kabkota,
+    const query = `SELECT 
+    E.name as nama_kabkota,
+    (SELECT jumlah  
+        FROM sis_penduduk 
+        WHERE kabkota_id = ${kabkota_id} 
+        ORDER BY sis_penduduk.id DESC LIMIT 1 ) as jumlah_penduduk,
+    (SELECT angka
+        FROM sis_angkasusenas_komoditas a
+        INNER JOIN sis_kabkotas b ON b.id = a.kabkota_id  
+        INNER JOIN sis_komoditas c ON c.id = a.komoditas_id  
+        WHERE kabkota_id = ${kabkota_id} 
+        AND komoditas_id = ${komoditas}  
+        ORDER BY a.id DESC LIMIT 1) as angka_susenas,
     A.komoditas, C.name nama_komoditas, A.tahun, A.bulan, 
     D.total_produksi AS ketersediaan,
     A.total_produksi produksi, 
