@@ -160,7 +160,7 @@ export const getDetailMaps = async(req, res) =>{
     WHERE 
     A.komoditas = ${komoditas}
     AND B.komoditas = ${komoditas}
-    AND B.komoditas = ${komoditas}
+    AND D.komoditas = ${komoditas}
     AND A.jenis_laporan = 1 
     AND B.jenis_laporan = 4 
     AND D.jenis_laporan = 3
@@ -180,6 +180,92 @@ export const getDetailMaps = async(req, res) =>{
     AND B.kabkota_id = E.id 
     AND D.kabkota_id = E.id
     ORDER BY A.komoditas`
+    
+    // const query = `SELECT A.kabkota_id, C.name nama_kabkota, A.tahun, A.bulan, A.total_produksi produksi, B.total_produksi AS kebutuhan, (A.total_produksi - B.total_produksi) AS selisih FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kabkotas C WHERE A.kabkota_id = B.kabkota_id AND A.jenis_laporan = 1 AND B.jenis_laporan = 4 AND A.komoditas = ${komoditas} AND B.komoditas = ${komoditas} AND A.tahun = ${tahun} AND B.tahun = ${tahun} AND A.bulan = ${bulan}  AND B.bulan = ${bulan}  AND A.kabkota_id = C.id AND B.kabkota_id = C.id ORDER BY A.kabkota_id`;
+    const result = await db.query(query, 
+        { 
+          type: db.QueryTypes.SELECT 
+        }
+    );
+
+    if(result.length > 0){
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Berhasil Ambil Data',
+            'data' : result,
+            
+        });
+
+    }else{
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data Kosong',
+            'data' : Array()
+        });
+
+    }    
+}
+
+export const getDetailMapsJateng = async(req, res) =>{
+
+
+    var currentTime = new Date()
+
+
+    if(req.body.komoditas != ''){
+        var komoditas = req.body.komoditas;
+    }else{
+        var komoditas = 1;
+    }
+
+    if(req.body.tahun != ''){
+        var tahun = req.body.tahun;
+    }else{
+        var tahun = currentTime.getFullYear();
+    }
+
+    if(req.body.bulan != ''){
+        var bulan = req.body.bulan;
+    }else{
+        var bulan = currentTime.getMonth() + 1;
+    }
+
+    const query = `SELECT 
+    (SELECT jumlah  
+        FROM sis_penduduk 
+        WHERE kabkota_id = 3300
+        ORDER BY sis_penduduk.id DESC LIMIT 1 ) as jumlah_penduduk,
+    (SELECT angka
+        FROM sis_angkasusenas_komoditas a
+        INNER JOIN sis_kabkotas b ON b.id = a.kabkota_id  
+        INNER JOIN sis_komoditas c ON c.id = a.komoditas_id  
+        WHERE kabkota_id = 3300
+        AND komoditas_id = ${komoditas} 
+        ORDER BY a.id DESC LIMIT 1) as angka_susenas,
+    A.komoditas, 
+    SUM(D.total_produksi) AS ketersediaan,
+    SUM(A.total_produksi) produksi, 
+    SUM(B.total_produksi) AS kebutuhan, 
+    (SUM(A.total_produksi) + SUM(D.total_produksi)) - SUM(B.total_produksi) AS selisih
+    FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kondisi_pangan D
+    WHERE 
+    A.komoditas = ${komoditas} 
+    AND B.komoditas = ${komoditas} 
+    AND D.komoditas = ${komoditas} 
+    AND A.jenis_laporan = 1 
+    AND B.jenis_laporan = 4 
+    AND D.jenis_laporan = 3
+    AND A.tahun = ${tahun} 
+    AND B.tahun = ${tahun}  
+    AND D.tahun = ${tahun} 
+    AND A.bulan = ${bulan}
+    AND B.bulan = ${bulan}
+    AND D.bulan = ${bulan}
+		GROUP BY A.komoditas`
     
     // const query = `SELECT A.kabkota_id, C.name nama_kabkota, A.tahun, A.bulan, A.total_produksi produksi, B.total_produksi AS kebutuhan, (A.total_produksi - B.total_produksi) AS selisih FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kabkotas C WHERE A.kabkota_id = B.kabkota_id AND A.jenis_laporan = 1 AND B.jenis_laporan = 4 AND A.komoditas = ${komoditas} AND B.komoditas = ${komoditas} AND A.tahun = ${tahun} AND B.tahun = ${tahun} AND A.bulan = ${bulan}  AND B.bulan = ${bulan}  AND A.kabkota_id = C.id AND B.kabkota_id = C.id ORDER BY A.kabkota_id`;
     const result = await db.query(query, 

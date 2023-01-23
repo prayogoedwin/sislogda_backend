@@ -168,6 +168,7 @@ import {
    getProduksiKebutuhan,
    getKetersediaanKebutuhan,
    getDetailMaps,
+   getDetailMapsJateng,
    getPenduduk,
    getDetailSusenas
 } from "../controllers/ChartFrontend.js"
@@ -342,6 +343,7 @@ router.post('/api/kondisidashboard', getKondisi);
 router.get('/api/kondisiproduksikebutuhan', getProduksiKebutuhan);
 router.get('/api/kondisiketersediaankebutuhan', getKetersediaanKebutuhan);
 router.post('/api/mapsdetail', getDetailMaps);
+router.post('/api/mapsdetailjateng', getDetailMapsJateng);
 router.get('/api/jmlpenduduk', getPenduduk);
 router.get('/api/susenas', getDetailSusenas);
 
