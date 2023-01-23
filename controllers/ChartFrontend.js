@@ -138,12 +138,13 @@ export const getDetailMaps = async(req, res) =>{
         var bulan = currentTime.getMonth() + 1;
     }
 
-    const query = `SELECT A.komoditas, C.name nama_komoditas, A.tahun, A.bulan, 
+    const query = `SELECT E.name as nama_kabkota,
+    A.komoditas, C.name nama_komoditas, A.tahun, A.bulan, 
     D.total_produksi AS ketersediaan,
     A.total_produksi produksi, 
     B.total_produksi AS kebutuhan, 
     (A.total_produksi + D.total_produksi) - B.total_produksi AS selisih
-    FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kondisi_pangan D, sis_komoditas C 
+    FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kondisi_pangan D, sis_komoditas C, sis_kabkotas E
     WHERE 
     A.komoditas = ${komoditas}
     AND B.komoditas = ${komoditas}
@@ -162,7 +163,10 @@ export const getDetailMaps = async(req, res) =>{
     AND D.bulan = ${bulan}
     AND A.komoditas = C.id 
     AND B.komoditas = C.id 
-    AND D.komoditas = C.id 
+    AND D.komoditas = C.id
+    AND A.kabkota_id = E.id 
+    AND B.kabkota_id = E.id 
+    AND D.kabkota_id = E.id
     ORDER BY A.komoditas`
     
     // const query = `SELECT A.kabkota_id, C.name nama_kabkota, A.tahun, A.bulan, A.total_produksi produksi, B.total_produksi AS kebutuhan, (A.total_produksi - B.total_produksi) AS selisih FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kabkotas C WHERE A.kabkota_id = B.kabkota_id AND A.jenis_laporan = 1 AND B.jenis_laporan = 4 AND A.komoditas = ${komoditas} AND B.komoditas = ${komoditas} AND A.tahun = ${tahun} AND B.tahun = ${tahun} AND A.bulan = ${bulan}  AND B.bulan = ${bulan}  AND A.kabkota_id = C.id AND B.kabkota_id = C.id ORDER BY A.kabkota_id`;
