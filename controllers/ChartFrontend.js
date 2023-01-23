@@ -439,7 +439,7 @@ export const getDetailSusenas = async(req, res) =>{
 export const getHargaAcuan = async(req, res) =>{
 
     var currentTime = new Date()
-    if(req.query.komoditas == ''){
+    if(req.body.komoditas == ''){
         res.statusCode = 200;
         res.json({
             'status' : 0,
@@ -448,11 +448,11 @@ export const getHargaAcuan = async(req, res) =>{
         });
         process.exit();
     }else{
-        var komoditas = req.query.komoditas;
+        var komoditas = req.body.komoditas;
     }
 
-    if(req.query.tahun != ''){
-        var tahun = req.query.tahun;
+    if(req.body.tahun != ''){
+        var tahun = req.body.tahun;
     }else{
         var tahun = currentTime.getFullYear();
     }
