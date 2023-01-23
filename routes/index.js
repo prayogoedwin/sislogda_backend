@@ -170,7 +170,8 @@ import {
    getDetailMaps,
    getDetailMapsJateng,
    getPenduduk,
-   getDetailSusenas
+   getDetailSusenas,
+   getHargaAcuan
 } from "../controllers/ChartFrontend.js"
 
 
@@ -346,6 +347,7 @@ router.post('/api/mapsdetail', getDetailMaps);
 router.post('/api/mapsdetailjateng', getDetailMapsJateng);
 router.get('/api/jmlpenduduk', getPenduduk);
 router.get('/api/susenas', getDetailSusenas);
+router.get('/api/hargaacuan', getHargaAcuan);
 
 
 
