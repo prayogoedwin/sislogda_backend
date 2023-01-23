@@ -1,6 +1,7 @@
 // Import model Product
 import Laporans from "../models/LaporanModel.js";
 import Produsens from "../models/ProdusenModel.js";
+import Users from "../models/UserModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -23,10 +24,10 @@ export const getLaporanProdusen = async(req, res) =>{
     //     as: 'dijual_ke_'
     // });
 
-    // Laporans.belongsTo(Users, {
-    //     targetKey:'id',
-    //     foreignKey: 'createdby',
-    // });
+    Laporans.belongsTo(Users, {
+        targetKey:'id',
+        foreignKey: 'createdby',
+    });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
@@ -82,10 +83,10 @@ export const getLaporanProdusen = async(req, res) =>{
             //     model: KategoriEnum,
             //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
             // },
-            // {
-            //     model: Users,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // },
+            {
+                model: Users,
+                attributes: { exclude: ['id','email','role_id','is_active','password','token', 'createdAt', 'updatedAt', 'deletedAt'] }
+            },
         ],
     
         where:whereClause,
