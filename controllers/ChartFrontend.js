@@ -457,10 +457,14 @@ export const getHargaAcuan = async(req, res) =>{
         var tahun = currentTime.getFullYear();
     }
 
+    // const query = `SELECT komoditas_id, tahun, batas_atas, batas_bawah  
+    // FROM sis_hargaacuanpembelian 
+    // WHERE komoditas_id = ${komoditas} 
+    // AND tahun = ${tahun} 
+    // ORDER BY id DESC LIMIT 1`;
     const query = `SELECT komoditas_id, tahun, batas_atas, batas_bawah  
     FROM sis_hargaacuanpembelian 
     WHERE komoditas_id = ${komoditas} 
-    AND tahun = ${tahun} 
     ORDER BY id DESC LIMIT 1`;
     const result = await db.query(query, 
         { 
