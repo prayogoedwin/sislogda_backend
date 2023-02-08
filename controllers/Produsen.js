@@ -248,6 +248,52 @@ export const getProdusenDetail = async (req, res) => {
     }
 }
 
+// Get detail pedagang
+export const getProdusenCount = async (req, res) => {
+    try {
+        const produsen = await Produsens.count({
+            where: {
+                // komoditas: req.body.komoditas,
+                deletedAt: null
+            }
+        });
+
+        if(produsen){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'hasil' : produsen,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'hasil' : produsen,
+            });
+
+        }
+        
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': err['errors'][0]['message']
+            // 'message': 'Error'
+        });
+    }
+}
+
+
 // Add produsen
 export const ProdusenCreate = async (req, res) => {
     var datetime = new Date();

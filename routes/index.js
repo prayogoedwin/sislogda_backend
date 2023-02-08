@@ -78,6 +78,7 @@ import {
 
 import { 
    getProdusen,
+   getProdusenCount,
    getProdusenAll,
    ProdusenCreate,
    getProdusenDetail,
@@ -286,6 +287,7 @@ router.get('/api/produsen', getProdusen);
 router.get('/api/produsen/all', getProdusenAll);
 router.post('/api/produsen/add', ProdusenCreate);
 router.post('/api/produsen/detail', getProdusenDetail);
+router.post('/api/produsen/count', getProdusenCount);
 router.post('/api/produsen/edit', ProdusenUpdate);
 router.post('/api/produsen/delete', ProdusenDelete);
 
