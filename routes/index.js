@@ -246,6 +246,7 @@ router.get('/api/penggilingan', getPenggilingan);
 router.get('/api/penggilingan/all', getPenggilinganAll);
 router.post('/api/penggilingan/add', PenggilinganCreate);
 router.post('/api/penggilingan/detail', getPenggilinganDetail);
+router.post('/api/penggilingan/count', getPenggilinganCount);
 router.post('/api/penggilingan/edit', PenggilinganUpdate);
 router.post('/api/penggilingan/delete', PenggilinganDelete);
 
@@ -254,6 +255,7 @@ router.get('/api/lumbung', getLumbung);
 router.get('/api/lumbung/all', getLumbungAll);
 router.post('/api/lumbung/add', LumbungCreate);
 router.post('/api/lumbung/detail', getLumbungDetail);
+\router.post('/api/lumbung/count', getLumbungCount);
 router.post('/api/lumbung/edit', LumbungUpdate);
 router.post('/api/lumbung/delete', LumbungDelete);
 
