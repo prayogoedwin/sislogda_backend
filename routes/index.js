@@ -35,6 +35,7 @@ import {
    getPenggilinganAll,
    PenggilinganCreate,
    getPenggilinganDetail,
+   getPenggilinganCount,
    PenggilinganDelete,
    PenggilinganUpdate
 } from "../controllers/Penggilingan.js";
@@ -44,6 +45,7 @@ import {
    getLumbungAll,
    LumbungCreate,
    getLumbungDetail,
+   getLumbungCount,
    LumbungDelete,
    LumbungUpdate
 } from "../controllers/Lumbung.js";

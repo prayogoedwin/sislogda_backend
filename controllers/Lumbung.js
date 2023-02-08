@@ -233,6 +233,51 @@ export const getLumbungDetail = async (req, res) => {
     }
 }
 
+// Get detail produsen
+export const getLumbungCount = async (req, res) => {
+    try {
+        const lumb = await Lumbungs.count({
+            where: {
+                // komoditas: req.body.komoditas,
+                deletedAt: null
+            }
+        });
+
+        if(lumb){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'hasil' : lumb,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'hasil' : lumb,
+            });
+
+        }
+        
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            'message': err['errors'][0]['message']
+            // 'message': 'Error'
+        });
+    }
+}
+
 // Add Lumbungs
 export const LumbungCreate = async (req, res) => {
     var datetime = new Date();

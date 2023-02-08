@@ -248,7 +248,7 @@ export const getProdusenDetail = async (req, res) => {
     }
 }
 
-// Get detail pedagang
+// Get detail produsen
 export const getProdusenCount = async (req, res) => {
     try {
         const produsen = await Produsens.count({
