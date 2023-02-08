@@ -239,6 +239,7 @@ export const getLumbungCount = async (req, res) => {
         const lumb = await Lumbungs.count({
             where: {
                 // komoditas: req.body.komoditas,
+                kabkota_id: req.body.kabkota_id,
                 deletedAt: null
             }
         });

@@ -253,6 +253,7 @@ export const getPenggilinganCount = async (req, res) => {
         const peng = await Penggilingans.count({
             where: {
                 // komoditas: req.body.komoditas,
+                kabkota_id: req.body.kabkota_id,
                 deletedAt: null
             }
         });
