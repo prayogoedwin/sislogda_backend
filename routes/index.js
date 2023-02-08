@@ -255,7 +255,7 @@ router.get('/api/lumbung', getLumbung);
 router.get('/api/lumbung/all', getLumbungAll);
 router.post('/api/lumbung/add', LumbungCreate);
 router.post('/api/lumbung/detail', getLumbungDetail);
-\router.post('/api/lumbung/count', getLumbungCount);
+router.post('/api/lumbung/count', getLumbungCount);
 router.post('/api/lumbung/edit', LumbungUpdate);
 router.post('/api/lumbung/delete', LumbungDelete);
 
