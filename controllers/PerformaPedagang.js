@@ -31,10 +31,10 @@ export const getPerforma = async(req, res) =>{
         foreignKey: 'createdby',
     });
 
-    Users.belongsTo(Pedagangs, {
-        targetKey:'komoditas',
-        foreignKey: 'komoditas',
-    });
+    // Users.belongsTo(Pedagangs, {
+    //     targetKey:'komoditas',
+    //     foreignKey: 'komoditas',
+    // });
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
@@ -49,7 +49,7 @@ export const getPerforma = async(req, res) =>{
         var x = req.query.komoditas
         whereClause = {
             kabkota_id: req.query.kabkota_id,
-            komoditas: req.query.komoditas,
+            // komoditas: req.query.komoditas,
             role_id: "4",
             deletedAt: null,
         };
@@ -107,10 +107,10 @@ export const getPerforma = async(req, res) =>{
             model: Laporans,
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         },
-        {
-            model: Pedagangs,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        }
+        // {
+        //     model: Pedagangs,
+        //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        // }
         ],
 
         where: whereClause,
