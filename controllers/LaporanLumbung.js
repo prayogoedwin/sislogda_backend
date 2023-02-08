@@ -40,7 +40,7 @@ export const getLaporanLumbung = async(req, res) =>{
 
         whereClause = {
             kabkota_id: req.query.kabkota_id,
-            komoditas: req.query.komoditas,
+            // komoditas: req.query.komoditas,
             kategori_laporan: "4",
             deletedAt: null,
         };
