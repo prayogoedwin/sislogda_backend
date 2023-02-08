@@ -49,6 +49,7 @@ export const getPerforma = async(req, res) =>{
         var x = req.query.komoditas
         whereClause = {
             kabkota_id: req.query.kabkota_id,
+            kategori_enumerator: 2,
             // komoditas: req.query.komoditas,
             role_id: "4",
             deletedAt: null,
