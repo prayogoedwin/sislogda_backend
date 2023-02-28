@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 export const EceranList = async (req, res) => {
-
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     const start = req.query.start;
     const end = req.query.end;
 
@@ -19,7 +19,7 @@ export const EceranList = async (req, res) => {
 }
 
 export const ProdusenList = async (req, res) => {
-
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     const start = req.query.start;
     const end = req.query.end;
 
@@ -37,7 +37,7 @@ export const ProdusenList = async (req, res) => {
 }
 
 export const GrosirList = async (req, res) => {
-
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     const start = req.query.start;
     const end = req.query.end;
 
