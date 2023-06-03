@@ -289,11 +289,8 @@ export const detailKondisiProduksi = async (req, res) => {
             res.json({
                 'status' : 1,
                 'message': 'Data berhasil ditemukan',
-                // 'data': Penggilingan[0]['name'],
-                'data' :  totalPage,
+                'data' :   totalPage,
                 'halaman' : req.query.halaman,
-                // 'data' : totalPage.concate(secondArray),
-                // 'data' :  totalPage.push(obj)
                 
             });
 
@@ -303,7 +300,6 @@ export const detailKondisiProduksi = async (req, res) => {
             res.json({
                 'status' : 1,
                 'message': 'Data Tidak Ditemukan',
-                // 'data': Penggilingan[0]['name'],
                 'data' : Array(),
             });
 
@@ -340,6 +336,7 @@ export const editKondisiProduksi = async (req, res) => {
             'message': 'Data berhasil diupdate',
             // 'data': Pedagang[0]['name'],
             'data' : produksi,
+            'halaman' : req.body.halaman
         });
 
         
