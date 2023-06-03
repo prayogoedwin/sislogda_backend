@@ -271,6 +271,49 @@ export const createBulkKondisiProduksi = async (req, res) => {
     }
 }
 
+// Get detail kondisi produksi
+export const detailKondisiProduksi = async (req, res) => {
+    try {
+        const totalPage = await KondisiPangans.findOne({
+            where: {
+                id: req.query.id,
+                deletedAt: null
+            }
+        });
+
+        if(totalPage){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : totalPage,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : Array(),
+            });
+
+        }
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
 //get cpp
 export const getKondisiCpp = async(req, res) =>{
     KondisiPangans.belongsTo(Kabkotas, {

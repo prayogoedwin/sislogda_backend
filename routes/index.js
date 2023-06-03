@@ -126,6 +126,7 @@ import {
    getKondisiProduksi,
    createKondisiProduksi,
    createBulkKondisiProduksi,
+   detailKondisiProduksi,
 
    getKondisiLuas,
    createKondisiLuas,
@@ -327,6 +328,7 @@ router.get('/api/performapedagang', getPerforma);
 router.get('/api/kondisiproduksi', getKondisiProduksi);
 router.post('/api/kondisiproduksi/add', createKondisiProduksi);
 router.post('/api/kondisiproduksi/add_bulk', createBulkKondisiProduksi);
+router.get('/api/kondisiproduksi/detail', detailKondisiProduksi);
 
 //kondisi pangan CPP crud
 router.get('/api/kondisiluas', getKondisiLuas);
