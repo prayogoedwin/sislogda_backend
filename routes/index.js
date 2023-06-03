@@ -355,8 +355,8 @@ router.post('/api/kondisicpp/edit', editKondisiCpp);
 router.get('/api/kondisikebutuhan', getKondisiKebutuhan);
 router.post('/api/kondisikebutuhan/add', createKondisiKebutuhan);
 router.post('/api/kondisikebutuhan/add_bulk', createBulkKondisiKebutuhan);
-router.get('/api/kondisiproduksi/detail', detailKondisiKebutuhan);
-router.post('/api/kondisiproduksi/edit', editKondisiKebutuhan);
+router.get('/api/kondisikebutuhan/detail', detailKondisiKebutuhan);
+router.post('/api/kondisikebutuhan/edit', editKondisiKebutuhan);
 
 // kondisi pangan dashboard
 router.post('/api/kondisidashboard', getKondisi);
