@@ -281,6 +281,8 @@ export const detailKondisiProduksi = async (req, res) => {
             }
         });
 
+
+
         if(totalPage){
 
             res.statusCode = 200;
@@ -288,7 +290,11 @@ export const detailKondisiProduksi = async (req, res) => {
                 'status' : 1,
                 'message': 'Data berhasil ditemukan',
                 // 'data': Penggilingan[0]['name'],
-                'data' : totalPage,
+                'data' :  totalPage,
+                'halaman' : req.query.halaman,
+                // 'data' : totalPage.concate(secondArray),
+                // 'data' :  totalPage.push(obj)
+                
             });
 
         }else{
@@ -976,7 +982,7 @@ export const createKondisiKebutuhan= async (req, res) => {
     }
 }
 
-// Add kondisi produksi
+// Add kondisi kebutuhan
 export const createBulkKondisiKebutuhan = async (req, res) => {
     var datetime = new Date();
     try {
