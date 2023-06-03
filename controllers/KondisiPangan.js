@@ -566,6 +566,7 @@ export const detailKondisiCpp = async (req, res) => {
                 'message': 'Data berhasil ditemukan',
                 // 'data': Penggilingan[0]['name'],
                 'data' : totalPage,
+                'halaman' : req.query.halaman
             });
 
         }else{
@@ -611,6 +612,7 @@ export const editKondisiCpp = async (req, res) => {
             'message': 'Data berhasil diupdate',
             // 'data': Pedagang[0]['name'],
             'data' : produksi,
+            'halaman' : req.body.halaman
         });
 
         
@@ -625,6 +627,8 @@ export const editKondisiCpp = async (req, res) => {
         });
     }
 }
+
+
 
 //luas tanam panen
 export const getKondisiLuas = async(req, res) =>{
@@ -821,6 +825,87 @@ export const createBulkKondisiLuas = async (req, res) => {
         });
     }
 }
+
+// Get detail kondisi kebutuhan
+export const detailKondisiLuas = async (req, res) => {
+    try {
+        const totalPage = await KondisiPangans.findOne({
+            where: {
+                id: req.query.id,
+                deletedAt: null
+            }
+        });
+
+        if(totalPage){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : totalPage,
+                'halaman' : req.query.halaman
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : Array(),
+            });
+
+        }
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
+// Add kondisi kebutuhan
+export const editKondisiLuas = async (req, res) => {
+    var datetime = new Date();
+    try {
+        // var p = req.body.pass;
+        const produksi = await KondisiPangans.update(
+            {
+                total_produksi : req.body.total_produksi
+            },{
+                where:{
+                    id: req.body.id
+                }
+            });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil diupdate',
+            // 'data': Pedagang[0]['name'],
+            'data' : produksi,
+            'halaman' : req.body.halaman
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
 
 
 // get kondisi kebutuhan
@@ -1019,7 +1104,7 @@ export const createBulkKondisiKebutuhan = async (req, res) => {
     }
 }
 
-// Get detail kondisi cpp
+// Get detail kondisi kebutuhan
 export const detailKondisiKebutuhan = async (req, res) => {
     try {
         const totalPage = await KondisiPangans.findOne({
@@ -1037,6 +1122,7 @@ export const detailKondisiKebutuhan = async (req, res) => {
                 'message': 'Data berhasil ditemukan',
                 // 'data': Penggilingan[0]['name'],
                 'data' : totalPage,
+                'halaman' : req.query.halaman
             });
 
         }else{
@@ -1062,7 +1148,7 @@ export const detailKondisiKebutuhan = async (req, res) => {
     }
 }
 
-// Add kondisi produksi
+// Add kondisi kebutuhan
 export const editKondisiKebutuhan = async (req, res) => {
     var datetime = new Date();
     try {
@@ -1082,6 +1168,7 @@ export const editKondisiKebutuhan = async (req, res) => {
             'message': 'Data berhasil diupdate',
             // 'data': Pedagang[0]['name'],
             'data' : produksi,
+            'halaman' : req.body.halaman
         });
 
         
