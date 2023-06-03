@@ -127,6 +127,7 @@ import {
    createKondisiProduksi,
    createBulkKondisiProduksi,
    detailKondisiProduksi,
+   editKondisiProduksi,
 
    getKondisiLuas,
    createKondisiLuas,
@@ -135,10 +136,14 @@ import {
    getKondisiCpp,
    createKondisiCpp,
    createBulkKondisiCpp,
+   detailKondisiCpp,
+   editKondisiCpp,
 
    getKondisiKebutuhan,
    createKondisiKebutuhan,
    createBulkKondisiKebutuhan,
+   detailKondisiKebutuhan,
+   editKondisiKebutuhan,
 
    getKondisi
 } from "../controllers/KondisiPangan.js";
@@ -329,21 +334,28 @@ router.get('/api/kondisiproduksi', getKondisiProduksi);
 router.post('/api/kondisiproduksi/add', createKondisiProduksi);
 router.post('/api/kondisiproduksi/add_bulk', createBulkKondisiProduksi);
 router.get('/api/kondisiproduksi/detail', detailKondisiProduksi);
+router.post('/api/kondisiproduksi/edit', editKondisiProduksi);
 
-//kondisi pangan CPP crud
+//kondisi pangan Luas crud
 router.get('/api/kondisiluas', getKondisiLuas);
 router.post('/api/kondisiluas/add', createKondisiLuas);
 router.post('/api/kondisiluas/add_bulk', createBulkKondisiLuas);
+
+
 
 //kondisi pangan CPP crud
 router.get('/api/kondisicpp', getKondisiCpp);
 router.post('/api/kondisicpp/add', createKondisiCpp);
 router.post('/api/kondisicpp/add_bulk', createBulkKondisiCpp);
+router.get('/api/kondisiproduksi/detail', detailKondisiCpp);
+router.post('/api/kondisiproduksi/edit', editKondisiCpp);
 
 //kondisi pangan kebutuhan crud
 router.get('/api/kondisikebutuhan', getKondisiKebutuhan);
 router.post('/api/kondisikebutuhan/add', createKondisiKebutuhan);
 router.post('/api/kondisikebutuhan/add_bulk', createBulkKondisiKebutuhan);
+router.get('/api/kondisiproduksi/detail', detailKondisiKebutuhan);
+router.post('/api/kondisiproduksi/edit', editKondisiKebutuhan);
 
 // kondisi pangan dashboard
 router.post('/api/kondisidashboard', getKondisi);

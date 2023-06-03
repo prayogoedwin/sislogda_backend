@@ -314,6 +314,41 @@ export const detailKondisiProduksi = async (req, res) => {
     }
 }
 
+// Add kondisi produksi
+export const editKondisiProduksi = async (req, res) => {
+    var datetime = new Date();
+    try {
+        // var p = req.body.pass;
+        const produksi = await KondisiPangans.update(
+            {
+                total_produksi : req.body.total_produksi
+            },{
+                where:{
+                    id: req.body.id
+                }
+            });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil diupdate',
+            // 'data': Pedagang[0]['name'],
+            'data' : produksi,
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
 //get cpp
 export const getKondisiCpp = async(req, res) =>{
     KondisiPangans.belongsTo(Kabkotas, {
@@ -493,6 +528,84 @@ export const createBulkKondisiCpp = async (req, res) => {
         res.json({
             'status' : 1,
             'message': 'Data berhasil ditambahkan',
+            // 'data': Pedagang[0]['name'],
+            'data' : produksi,
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
+// Get detail kondisi cpp
+export const detailKondisiCpp = async (req, res) => {
+    try {
+        const totalPage = await KondisiPangans.findOne({
+            where: {
+                id: req.query.id,
+                deletedAt: null
+            }
+        });
+
+        if(totalPage){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : totalPage,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : Array(),
+            });
+
+        }
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
+// Add kondisi produksi
+export const editKondisiCpp = async (req, res) => {
+    var datetime = new Date();
+    try {
+        // var p = req.body.pass;
+        const produksi = await KondisiPangans.update(
+            {
+                total_produksi : req.body.total_produksi
+            },{
+                where:{
+                    id: req.body.id
+                }
+            });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil diupdate',
             // 'data': Pedagang[0]['name'],
             'data' : produksi,
         });
@@ -902,3 +1015,82 @@ export const createBulkKondisiKebutuhan = async (req, res) => {
         });
     }
 }
+
+// Get detail kondisi cpp
+export const detailKondisiKebutuhan = async (req, res) => {
+    try {
+        const totalPage = await KondisiPangans.findOne({
+            where: {
+                id: req.query.id,
+                deletedAt: null
+            }
+        });
+
+        if(totalPage){
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : totalPage,
+            });
+
+        }else{
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data Tidak Ditemukan',
+                // 'data': Penggilingan[0]['name'],
+                'data' : Array(),
+            });
+
+        }
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
+// Add kondisi produksi
+export const editKondisiKebutuhan = async (req, res) => {
+    var datetime = new Date();
+    try {
+        // var p = req.body.pass;
+        const produksi = await KondisiPangans.update(
+            {
+                total_produksi : req.body.total_produksi
+            },{
+                where:{
+                    id: req.body.id
+                }
+            });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil diupdate',
+            // 'data': Pedagang[0]['name'],
+            'data' : produksi,
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}
+
