@@ -249,27 +249,39 @@ export const createBulkKondisiProduksi = async (req, res) => {
         //         updatedAt: datetime
         //     });
 
-        const updates = await KondisiPangans.update(
+        const up = await KondisiPangans.update(
             {
                 deletedAt: datetime 
             },{
                 where:{
-                    jenis_laporan: req.body.jenis_laporan,
-                    tahun: req.body.tahun,
-                    bulan: req.body.bulan,
-                    komoditas: req.body.komoditas,
+                    jenis_laporan: req.body[0].jenis_laporan,
+                    tahun: req.body[0].tahun,
+                    bulan: req.body[0].bulan,
+                    komoditas: req.body[0].komoditas,
                 }
             });
+        if(up){
 
-        const produksi = await KondisiPangans.bulkCreate(p);
+            const produksi = await KondisiPangans.bulkCreate(p);
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditambahkan',
+                // 'data': Pedagang[0]['name'],
+                'data' : produksi,
+            });
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditambahkan',
-            // 'data': Pedagang[0]['name'],
-            'data' : produksi,
-        });
+        }else{
+            res.statusCode = 404;
+            res.json({
+                'status' : 0,
+                // 'message': err,
+                // 'message': err['errors'][0]['message']
+                'message': 's'
+            });
+        }
+
+        
 
         
     } catch (err) {
@@ -277,7 +289,7 @@ export const createBulkKondisiProduksi = async (req, res) => {
         res.statusCode = 404;
         res.json({
             'status' : 0,
-            // 'message': err,
+            // 'message': req.body[0].jenis_laporan,
             // 'message': err['errors'][0]['message']
             'message': 'Error'
         });
