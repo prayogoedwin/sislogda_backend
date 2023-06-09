@@ -550,16 +550,42 @@ export const createBulkKondisiCpp = async (req, res) => {
         //         createdAt: datetime,
         //         updatedAt: datetime
         //     });
-        const produksi = await KondisiPangans.bulkCreate(p);
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditambahkan',
-            // 'data': Pedagang[0]['name'],
-            'data' : produksi,
-        });
+        const up = await KondisiPangans.update(
+            {
+                deletedAt: datetime 
+            },{
+                where:{
+                    jenis_laporan: req.body[0].jenis_laporan,
+                    tahun: req.body[0].tahun,
+                    bulan: req.body[0].bulan,
+                    komoditas: req.body[0].komoditas,
+                }
+            });
+        if(up){
 
+            const produksi = await KondisiPangans.bulkCreate(p);
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditambahkan',
+                // 'data': Pedagang[0]['name'],
+                'data' : produksi,
+            });
+
+        }else{
+
+            // console.log(err);
+            res.statusCode = 404;
+            res.json({
+                'status' : 0,
+                // 'message': err,
+                // 'message': err['errors'][0]['message']
+                'message': 'Error'
+            });
+
+        }
         
     } catch (err) {
         // console.log(err);
@@ -1106,16 +1132,41 @@ export const createBulkKondisiKebutuhan = async (req, res) => {
         //         createdAt: datetime,
         //         updatedAt: datetime
         //     });
-        const kebutuhan = await KondisiPangans.bulkCreate(k);
 
-        res.statusCode = 200;
-        res.json({
-            'status' : 1,
-            'message': 'Data berhasil ditambahkan',
-            // 'data': Pedagang[0]['name'],
-            'data' : kebutuhan,
-        });
+        const up = await KondisiPangans.update(
+            {
+                deletedAt: datetime 
+            },{
+                where:{
+                    jenis_laporan: req.body[0].jenis_laporan,
+                    tahun: req.body[0].tahun,
+                    bulan: req.body[0].bulan,
+                    komoditas: req.body[0].komoditas,
+                }
+            });
+        if(up){
 
+            const kebutuhan = await KondisiPangans.bulkCreate(k);
+
+            res.statusCode = 200;
+            res.json({
+                'status' : 1,
+                'message': 'Data berhasil ditambahkan',
+                // 'data': Pedagang[0]['name'],
+                'data' : kebutuhan,
+            });
+
+        }else{
+
+            res.statusCode = 404;
+            res.json({
+                'status' : 0,
+                // 'message': err,
+                // 'message': err['errors'][0]['message']
+                'message': 'Error'
+            });
+
+        }
         
     } catch (err) {
         // console.log(err);
