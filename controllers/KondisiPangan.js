@@ -258,7 +258,6 @@ export const createBulkKondisiProduksi = async (req, res) => {
                     tahun: req.body.tahun,
                     bulan: req.body.bulan,
                     komoditas: req.body.komoditas,
-                    kabkota_id : req.body.kabkota_id,
                 }
             });
 
