@@ -238,9 +238,9 @@ export const createBulkKondisiProduksi = async (req, res) => {
         const p = req.body;
         // const produksi = await KondisiPangans.create(
         //     {
-		// 		jenis_laporan: 1,
+		// 		   jenis_laporan: 1,
         //         tahun: req.body.tahun,
-		// 		bulan: req.body.bulan,
+		// 		   bulan: req.body.bulan,
         //         komoditas: req.body.komoditas,
         //         kabkota_id : req.body.kabkota_id,
         //         total_produksi : req.body.total_produksi,
@@ -248,6 +248,20 @@ export const createBulkKondisiProduksi = async (req, res) => {
         //         createdAt: datetime,
         //         updatedAt: datetime
         //     });
+
+        const updates = await KondisiPangans.update(
+            {
+                deletedAt: datetime 
+            },{
+                where:{
+                    jenis_laporan: req.body.jenis_laporan,
+                    tahun: req.body.tahun,
+                    bulan: req.body.bulan,
+                    komoditas: req.body.komoditas,
+                    kabkota_id : req.body.kabkota_id,
+                }
+            });
+
         const produksi = await KondisiPangans.bulkCreate(p);
 
         res.statusCode = 200;
