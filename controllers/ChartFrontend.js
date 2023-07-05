@@ -28,7 +28,7 @@ export const getProduksiKebutuhan = async(req, res) =>{
         var bulan = currentTime.getMonth() + 1;
     }
     
-    const query = `SELECT A.kabkota_id, C.name nama_kabkota, A.tahun, A.bulan, A.total_produksi produksi, B.total_produksi AS kebutuhan, (A.total_produksi - B.total_produksi) AS selisih FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kabkotas C WHERE A.kabkota_id = B.kabkota_id AND A.jenis_laporan = 1 AND B.jenis_laporan = 4 AND A.komoditas = ${komoditas} AND B.komoditas = ${komoditas} AND A.tahun = ${tahun} AND B.tahun = ${tahun} AND A.bulan = ${bulan}  AND B.bulan = ${bulan}  AND A.kabkota_id = C.id AND B.kabkota_id = C.id ORDER BY A.kabkota_id`;
+    const query = `SELECT A.kabkota_id, C.name nama_kabkota, A.tahun, A.bulan, A.total_produksi produksi, B.total_produksi AS kebutuhan, (A.total_produksi - B.total_produksi) AS selisih FROM sis_kondisi_pangan A, sis_kondisi_pangan B, sis_kabkotas C WHERE A.kabkota_id = B.kabkota_id AND A.jenis_laporan = 1 AND B.jenis_laporan = 4 AND A.komoditas = ${komoditas} AND B.komoditas = ${komoditas} AND A.tahun = ${tahun} AND B.tahun = ${tahun} AND A.bulan = ${bulan}  AND B.bulan = ${bulan}  AND A.kabkota_id = C.id AND B.kabkota_id = C.id AND A.deletedat IS NULL AND B.deletedat IS NULL ORDER BY A.id DESC, A.kabkota_id`;
     const result = await db.query(query, 
         { 
           type: db.QueryTypes.SELECT 
