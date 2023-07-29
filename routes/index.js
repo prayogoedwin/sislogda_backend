@@ -12,6 +12,11 @@ import {
  } from "../controllers/Role.js";
 
  import { 
+   getProfilDetail,
+   profilUpdatePassword,
+} from "../controllers/Profil.js";
+
+ import { 
     getUsers,
     getUsersRole,
     getUsersAll,
@@ -230,6 +235,10 @@ router.get('/api/kategorienum', getKategoriEnum);
 
 //komoditas
 router.get('/api/komoditas', getKomoditas);
+
+//profil
+router.post('/api/profil/ku', getProfilDetail);
+router.post('/api/profil/gantipassword', profilUpdatePassword);
 
 
 //users crud
