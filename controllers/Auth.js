@@ -28,23 +28,35 @@ export const loginUser = async (req, res) => {
             const verified = bcrypt.compareSync(req.body.password, passwordHash);
             if(verified){
                 let id_token = bcrypt.hashSync(req.body.email+datetime, 10);
-                res.statusCode = 200;
-                var dt = {
-                    id : user[0]['id'],
-                    email  : user[0]['email'],
-                    role : user[0]['role_id'],
-                    kabkota_id : user[0]['kabkota_id'],
-                    komoditas : user[0]['komoditas'],
-                    nama_lengkap : user[0]['nama_lengkap'],
-                    kategori_enumerator : user[0]['kategori_enumerator'],
-                    id_token : id_token
-                }
-                res.json({
-                    'status' : 1,
-                    'message': 'User berhasil ditemukan',
-                    // 'data' : user[0],
-                    'data' : dt
-                });
+
+                    const token = await Users.update({
+                        token: id_token,
+                        updatedAt: datetime
+                    },{
+                        where:{
+                            id: user[0]['id']
+                        }
+                    });
+            
+                    res.statusCode = 200;
+                    var dt = {
+                        id : user[0]['id'],
+                        email  : user[0]['email'],
+                        role : user[0]['role_id'],
+                        kabkota_id : user[0]['kabkota_id'],
+                        komoditas : user[0]['komoditas'],
+                        nama_lengkap : user[0]['nama_lengkap'],
+                        kategori_enumerator : user[0]['kategori_enumerator'],
+                        id_token : id_token
+                    }
+            
+                    res.json({
+                        'status' : 1,
+                        'message': 'User berhasil ditemukan',
+                        // 'data' : user[0],
+                        'data' : dt
+                    });
+
             } else {
                 res.json({
                     'status' : 0,
@@ -81,3 +93,4 @@ export const loginUser = async (req, res) => {
         });
     }
 }
+
