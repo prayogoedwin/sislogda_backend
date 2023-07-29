@@ -98,15 +98,14 @@ export const loginUser = async (req, res) => {
 
 
 export const cekToken = async (req, res) => {
-    var datetime = new Date();
     try {
-        if(!req.body.role || !req.body.token) {
-            res.statusCode = 401;
-            res.json({
-                'status' : 0,
-                'message': 'Semua parameter wajib terisi'
-            });
-        }
+        // if(!req.body.role || !req.body.token) {
+        //     res.statusCode = 401;
+        //     res.json({
+        //         'status' : 0,
+        //         'message': 'Semua parameter wajib terisi'
+        //     });
+        // }
 
         const user = await Users.findAll({
             limit: 1,
