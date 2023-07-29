@@ -3,7 +3,8 @@ import express from "express";
 import cors from "cors";
 // Import Controller Product
 import { 
-    loginUser
+    loginUser,
+    cekToken,
  } from "../controllers/Auth.js";
 
  import { 
@@ -215,6 +216,7 @@ router.use(cors());
 // Route get semua users
 // router.get('/users', getUsers);
 router.post('/api/login', loginUser);
+router.post('/api/verifikasihakakses', cekToken);
 router.get('/api/roles', getRoles);
 
 //Wilayah
