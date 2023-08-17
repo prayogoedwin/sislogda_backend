@@ -187,7 +187,9 @@ import {
    getDetailMapsJateng,
    getPenduduk,
    getDetailSusenas,
-   getHargaAcuan
+   getHargaAcuan,
+
+   getProduksiKebutuhanExternal,
 } from "../controllers/ChartFrontend.js"
 
 
@@ -197,8 +199,10 @@ import {
 // import {Test} from "../controllers/HargaHarian.js"
 import {
    ProdusenList,
+   ProdusenListExternal,
    GrosirList,
-   EceranList
+   EceranList,
+   EceranListExternal,
 } from "../controllers/Harga.js"
 
 
@@ -381,6 +385,10 @@ router.get('/api/jmlpenduduk', getPenduduk);
 router.get('/api/susenas', getDetailSusenas);
 router.post('/api/hargaacuan', getHargaAcuan);
 
+// kondisi pangan dashboard external
+router.get('/api/kondisiproduksikebutuhan_external', getProduksiKebutuhanExternal);
+
+
 
 
 
@@ -389,6 +397,8 @@ router.get('/api/produsenlist', ProdusenList);
 router.get('/api/grosirlist', GrosirList);
 router.get('/api/eceranlist', EceranList);
 
+router.get('/api/produsenlistexternal', ProdusenListExternal);
+router.get('/api/eceranlistexternal', EceranListExternal);
 
 //angka susenas
 router.get('/api/angkasusenas', getAngka);
