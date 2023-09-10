@@ -172,3 +172,33 @@ export const LaporanPedagangCreate = async (req, res) => {
         });
     }
 }
+
+// Delete laporan pedagang
+export const LaporanPedagangDelete = async (req, res) => {
+    var datetime = new Date();
+    try {
+        const pedagang = await Laporans.update({deletedAt: datetime},{
+            where:{
+                id: req.body.id
+            }
+        });
+
+        res.statusCode = 200;
+        res.json({
+            'status' : 1,
+            'message': 'Data berhasil dihapus',
+            // 'data': Pedagang[0]['name'],
+            'data' : "",
+        });
+
+        
+    } catch (err) {
+        // console.log(err);
+        res.statusCode = 404;
+        res.json({
+            'status' : 0,
+            // 'message': err['errors'][0]['message']
+            'message': 'Error'
+        });
+    }
+}

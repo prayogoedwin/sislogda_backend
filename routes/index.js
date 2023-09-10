@@ -105,12 +105,14 @@ import {
 
 import { 
    getLaporanPedagang,
-   LaporanPedagangCreate
+   LaporanPedagangCreate,
+   LaporanPedagangDelete
 } from "../controllers/LaporanPedagang.js";
 
 import { 
    getLaporanProdusen,
-   LaporanProdusenCreate
+   LaporanProdusenCreate,
+   LaporanProdusenDelete
 } from "../controllers/LaporanProdusen.js";
 
 import { 
@@ -329,10 +331,12 @@ router.post('/api/koperasi/delete', KoperasiDelete);
 //laporan pedagang crud
 router.get('/api/laporanpedagang', getLaporanPedagang);
 router.post('/api/laporanpedagang/add', LaporanPedagangCreate);
+router.post('/api/laporanpedagang/delete', LaporanPedagangDelete);
 
 //laporan produsen crud
 router.get('/api/laporanprodusen', getLaporanProdusen);
 router.post('/api/laporanprodusen/add', LaporanProdusenCreate);
+router.post('/api/laporanprodusen/delete', LaporanProdusenDelete);
 
 //laporan penggilingan crud
 router.get('/api/laporanpenggilingan', getLaporanPenggilingan);
