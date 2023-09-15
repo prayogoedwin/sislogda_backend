@@ -192,8 +192,8 @@ export const getPedagang = async(req, res) =>{
            'status' : 1,
            'message': 'Berhasil Ambil Data',
            'limit' : limit,
-           'totalRows' : totalRows,
-           'totalPage' : totalPage,
+           'totalRows' : 0,
+           'totalPage' : 0,
            'page' : page,
            'data' : result,
            
