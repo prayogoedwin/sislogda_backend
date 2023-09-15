@@ -8,7 +8,7 @@ import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getPedagang = async(req, res) =>{
+export const getPedagangS = async(req, res) =>{
 
      Pedagangs.belongsTo(Kabkotas, {
         targetKey:'id',
@@ -129,6 +129,90 @@ export const getPedagang = async(req, res) =>{
             
 
     
+}
+
+export const getPedagang = async(req, res) =>{
+
+    Pedagangs.belongsTo(Kabkotas, {
+       targetKey:'id',
+       foreignKey: 'kabkota_id'
+    });
+
+    Pedagangs.belongsTo(Kecamatans, {
+       targetKey:'id',
+       foreignKey: 'kecamatan_id'
+    });
+
+    Pedagangs.belongsTo(Kelurahans, {
+       targetKey:'id',
+       foreignKey: 'kelurahan_id'
+    });
+
+    Pedagangs.belongsTo(Komoditass, {
+       targetKey:'id',
+       foreignKey: 'komoditas',
+    });
+
+   const page = parseInt(req.query.page) || 0;
+   const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
+   const search = req.query.search_query || "";
+   const offset = limit * page;
+
+
+   const result = await Pedagangs.findAll({
+       include: [
+       {
+           model: Kabkotas,
+           attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+       },
+       {
+           model: Kecamatans,
+           attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+       },
+       {
+           model: Kelurahans,
+           attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+       },
+       {
+           model: Komoditass,
+           attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+       }
+       ],
+       
+       attributes: { exclude: ['updatedAt', 'deletedAt'] },
+       order:[
+           ['id', 'DESC']
+       ]
+   });
+
+   if(result.length > 0){
+
+       res.statusCode = 200;
+       res.json({
+           'status' : 1,
+           'message': 'Berhasil Ambil Data',
+           'limit' : limit,
+           'totalRows' : totalRows,
+           'totalPage' : totalPage,
+           'page' : page,
+           'data' : result,
+           
+       });
+
+   }else{
+
+       res.statusCode = 200;
+       res.json({
+           'status' : 1,
+           'message': 'Data Kosong',
+           'data' : Array()
+       });
+
+   }
+
+           
+
+   
 }
 
 
