@@ -160,13 +160,9 @@ export const getPedagang = async(req, res) =>{
 
         whereClause = {
             kabkota_id: req.query.kabkota_id,
-            
-            deletedAt: null,
-            [Op.or]: [{nama:{
-                [Op.like]: '%'+search+'%'
-            }}]
+            deletedAt: null
         };   
-        
+
     }
 
    const page = parseInt(req.query.page) || 0;
