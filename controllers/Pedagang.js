@@ -153,6 +153,30 @@ export const getPedagang = async(req, res) =>{
        foreignKey: 'komoditas',
     });
 
+
+    var whereClause;
+
+   if(req.query.kabkota_id != '' ){
+
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };   
+    }else{
+
+        whereClause = {
+            deletedAt: null,
+            [Op.or]: [{nama:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        };
+
+    }
+
    const page = parseInt(req.query.page) || 0;
    const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
    const search = req.query.search_query || "";
