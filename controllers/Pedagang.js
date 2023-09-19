@@ -166,15 +166,7 @@ export const getPedagang = async(req, res) =>{
                 [Op.like]: '%'+search+'%'
             }}]
         };   
-    }else{
-
-        whereClause = {
-            deletedAt: null,
-            [Op.or]: [{nama:{
-                [Op.like]: '%'+search+'%'
-            }}]
-        };
-
+        
     }
 
    const page = parseInt(req.query.page) || 0;
@@ -202,6 +194,8 @@ export const getPedagang = async(req, res) =>{
            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
        }
        ],
+       
+       where:whereClause,
        
        attributes: { exclude: ['updatedAt', 'deletedAt'] },
        order:[
