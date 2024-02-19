@@ -1,7 +1,9 @@
 // Import model Product
+import { Sequelize } from 'sequelize'; // Tambahkan ini
 import Laporans from "../models/LaporanModel.js";
 import Produsens from "../models/ProdusenModel.js";
 import Users from "../models/UserModel.js";
+import Kabkotas from "../models/KabkotaModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -12,11 +14,21 @@ export const getLaporanProdusen = async(req, res) =>{
         foreignKey: 'data_dari'
     });
 
-    // Laporans.belongsTo(Kabkotas, {
-    //     targetKey:'id',
-    //     foreignKey: 'berasal_dari',
-    //     as: 'berasal_dari_'
-    // });
+    Laporans.belongsTo(Kabkotas, {
+        targetKey:'id',
+        foreignKey: 'kabkota_id',
+        as: 'kabkota_'
+    });
+
+    Laporans.belongsTo(Kabkotas, {
+        foreignKey: 'berasal_dari',
+        as: 'berasal_dari_'
+    });
+    
+    Laporans.belongsTo(Kabkotas, {
+        foreignKey: 'dijual_ke',
+        as: 'dijual_ke_'
+    });
 
     // Laporans.belongsTo(Kabkotas2, {
     //     targetKey:'id',
@@ -70,10 +82,23 @@ export const getLaporanProdusen = async(req, res) =>{
                 model: Produsens,
                 attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
             },
-            // {
-            //     model: Kabkotas,
-            //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-            // },
+            {
+                model: Kabkotas,
+                as: 'kabkota_',
+                attributes: ['id', 'name']
+                // attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            },
+            {
+                model: Kabkotas, // Menggabungkan sis_kabkota untuk berasal_dari
+                as: 'berasal_dari_',
+                attributes: ['id','name']
+            },
+            {
+                model: Kabkotas, // Menggabungkan sis_kabkota untuk dijual_ke
+                as: 'dijual_ke_',
+                attributes: ['id','name']
+            },
+
             // {
             //     model: Komoditass,
             //     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
@@ -91,13 +116,23 @@ export const getLaporanProdusen = async(req, res) =>{
     
         where:whereClause,
         
-        attributes: { exclude: ['updatedAt', 'deletedAt'] },
+        attributes: { 
+            exclude: ['updatedAt', 'deletedAt'],
+            include: [
+                [Sequelize.col('sis_produsen.nama'), 'produsen_name'],
+                [Sequelize.col('kabkota_.name'), 'kabkota_name'],
+                [Sequelize.col('berasal_dari_.name'), 'berasal_dari_name'],
+                [Sequelize.col('dijual_ke_.name'), 'dijual_ke_name']
+            ]
+        },
         offset: offset,
         limit: limit,
         order:[
             ['id', 'DESC']
         ]
     });
+
+   
 
     if(result.length > 0){
 
@@ -110,6 +145,7 @@ export const getLaporanProdusen = async(req, res) =>{
             'totalPage' : totalPage,
             'page' : page,
             'data' : result,
+            // 'data' : modifiedResult
             
         });
 
