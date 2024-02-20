@@ -8,7 +8,7 @@ import Kabkotas from "../models/KabkotaModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getLaporanPenggilingan = async(req, res) =>{
+export const getLaporanPenggilingansss = async(req, res) =>{
 
     Laporans.belongsTo(Penggilingans, {
         targetKey:'id',
@@ -27,11 +27,13 @@ export const getLaporanPenggilingan = async(req, res) =>{
     });
 
     Laporans.belongsTo(Kabkotas, {
+        targetKey:'id',
         foreignKey: 'berasal_dari',
         as: 'berasal_dari_'
     });
     
     Laporans.belongsTo(Kabkotas, {
+         targetKey:'id',
         foreignKey: 'dijual_ke',
         as: 'dijual_ke_'
     });
@@ -173,6 +175,161 @@ export const getLaporanPenggilingan = async(req, res) =>{
     }
     
 }
+
+export const getLaporanPenggilingan = async (req, res) => {
+
+    delete Laporans.associations.kabkota_;
+    delete Laporans.associations.berasal_dari_;
+    delete Laporans.associations.dijual_ke_;
+
+    
+    Laporans.belongsTo(Penggilingans, {
+        targetKey: 'id',
+        foreignKey: 'data_dari'
+    });
+
+    Laporans.belongsTo(Komoditass, {
+        targetKey: 'id',
+        foreignKey: 'komoditas'
+    });
+
+    Laporans.belongsTo(Kabkotas, {
+        targetKey: 'id',
+        foreignKey: 'kabkota_id',
+        as: 'kabkota_'
+    });
+
+    Laporans.belongsTo(Kabkotas, {
+        targetKey: 'id',
+        foreignKey: 'berasal_dari',
+        as: 'berasal_dari_'
+    });
+
+    Laporans.belongsTo(Kabkotas, {
+        targetKey: 'id',
+        foreignKey: 'dijual_ke',
+        as: 'dijual_ke_'
+    });
+
+    // Laporans.belongsTo(Kabkotas, {
+    //     targetKey:'id',
+    //     foreignKey: 'berasal_dari',
+    //     as: 'berasal_dari_'
+    // });
+
+    // Laporans.belongsTo(Kabkotas2, {
+    //     targetKey:'id',
+    //     foreignKey: 'dijual_ke',
+    //     as: 'dijual_ke_'
+    // });
+
+    Laporans.belongsTo(Users, {
+        targetKey: 'id',
+        foreignKey: 'createdby',
+    });
+
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || process.env.PAGE_LIMIT_PAGINATION;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+
+    var whereClause;
+
+    if (req.query.kabkota_id != '' && req.query.komoditas != '') {
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            kategori_laporan: "3",
+            deletedAt: null,
+        };
+    } else if (req.query.kabkota_id != '') {
+        whereClause = {
+            kabkota_id: req.query.kabkota_id,
+            kategori_laporan: "3",
+            deletedAt: null,
+        };
+    } else {
+        whereClause = {
+            kategori_laporan: "3",
+            deletedAt: null
+        };
+    }
+
+    const totalRows = await Laporans.count({
+        where: whereClause
+    });
+    const totalPage = Math.ceil(totalRows / limit);
+    const result = await Laporans.findAll({
+        include: [
+            {
+                model: Penggilingans,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            },
+            {
+                model: Komoditass,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            }, 
+
+            {
+                model: Kabkotas,
+                as: 'kabkota_',
+                attributes: ['id', 'name']
+            },
+            {
+                model: Kabkotas,
+                as: 'berasal_dari_',
+                attributes: ['id', 'name']
+            },
+            {
+                model: Kabkotas,
+                as: 'dijual_ke_',
+                attributes: ['id', 'name']
+            },
+    
+            {
+                model: Users,
+                attributes: { exclude: ['id', 'email', 'role_id', 'is_active', 'password', 'token', 'createdAt', 'updatedAt', 'deletedAt'] }
+            },
+        ],
+    
+        where: whereClause,
+        
+        attributes: { 
+            exclude: ['updatedAt', 'deletedAt'],
+            include: [
+                [Sequelize.col('sis_penggilingan.nama'), 'produsen_name'],
+                [Sequelize.col('kabkota_.name'), 'kabkota_name'],
+                [Sequelize.col('berasal_dari_.name'), 'berasal_dari_name'],
+                [Sequelize.col('dijual_ke_.name'), 'dijual_ke_name']
+            ]
+        },
+        offset: offset,
+        limit: limit,
+        order:[
+            ['id', 'DESC']
+        ]
+    });
+
+    if (result.length > 0) {
+        res.statusCode = 200;
+        res.json({
+            'status': 1,
+            'message': 'Berhasil Ambil Data',
+            'limit': limit,
+            'totalRows': totalRows,
+            'totalPage': totalPage,
+            'page': page,
+            'data': result,
+        });
+    } else {
+        res.statusCode = 200;
+        res.json({
+            'status': 1,
+            'message': 'Data Kosong',
+            'data': Array()
+        }); 
+    }
+};
+
 
 // Add Penggilingan
 export const LaporanPenggilinganCreate = async (req, res) => {

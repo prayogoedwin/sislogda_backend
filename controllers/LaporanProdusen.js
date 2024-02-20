@@ -9,6 +9,10 @@ dotenv.config();
 
 export const getLaporanProdusen = async(req, res) =>{
 
+    delete Laporans.associations.kabkota_;
+    delete Laporans.associations.berasal_dari_;
+    delete Laporans.associations.dijual_ke_;
+
     Laporans.belongsTo(Produsens, {
         targetKey:'id',
         foreignKey: 'data_dari'
