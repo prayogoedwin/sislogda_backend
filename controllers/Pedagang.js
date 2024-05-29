@@ -8,7 +8,7 @@ import {Op} from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getPedagangS = async(req, res) =>{
+export const getPedagang = async(req, res) =>{
 
      Pedagangs.belongsTo(Kabkotas, {
         targetKey:'id',
@@ -131,7 +131,7 @@ export const getPedagangS = async(req, res) =>{
     
 }
 
-export const getPedagang = async(req, res) =>{
+export const getPedagangS = async(req, res) =>{
 
     Pedagangs.belongsTo(Kabkotas, {
        targetKey:'id',
